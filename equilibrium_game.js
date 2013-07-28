@@ -29,6 +29,7 @@ var G = {
         _g.sel.offset.y = -canvas.offsetTop;
         canvas.onmousemove = _g.moveHandler.bind(_g);
         canvas.onmouseup = _g.clickUpHandler.bind(_g);
+        canvas.onmouseleave = _g.clickUpHandler.bind(_g);
         canvas.onmousedown = _g.clickDownHandler.bind(_g);
         _g.populateGame();
       } else {
@@ -53,9 +54,11 @@ var G = {
       var total = 0;
       _g.connections.forEach(function (connection) {
         total += connection.quantity;
+        console.log(connection.quantity);
       });
       _g.nodes.forEach(function (node) {
         total += node.quantity;
+        console.log(node.quantity);
       });
       return total;
     }
@@ -173,7 +176,7 @@ var G = {
           }
         });
       }
-      //console.log(_g.computeTotalQuantity());
+      console.log(_g.computeTotalQuantity());
     }
   , clickUpHandler: function (e) {
       var _g = this;
@@ -181,7 +184,8 @@ var G = {
         var is_proper_release = false;
         _g.nodes.some(function (node) {
           // Is releasing on node?
-          if (dist2D(node.pos, _g.sel.end_point_pos) < node.getQuantity()) {
+          if (_g.sel.selected_node !== node
+            && dist2D(node.pos, _g.sel.end_point_pos) < node.getQuantity()) {
             console.log("RELEASE PROPER");
             var conn = makeConnection(_g.sel.selected_node, node);
             node.increaseQuantity(_g.sel.quantity - conn.quantity);
@@ -197,7 +201,7 @@ var G = {
         _g.sel.quantity = 0;
         _g.sel.selected_node = null;
       }
-      //console.log(_g.computeTotalQuantity());
+      console.log(_g.computeTotalQuantity());
     }
   };
 

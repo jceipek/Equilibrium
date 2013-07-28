@@ -16,13 +16,22 @@ define(['constants', 'helpers', 'node'], function (Constants, Helpers, Node) {
         return conn;
       }
     , simulate: function (conn) {
-        if (Math.abs(Node.getQuantityFor(conn.a) - Node.getQuantityFor(conn.b)) > Constants.TRANSFER_SPEED) {
+        var difference = Math.abs(Node.getQuantityFor(conn.a) - Node.getQuantityFor(conn.b));
+        if (difference > Constants.TRANSFER_SPEED) {
           if (Node.getQuantityFor(conn.a) > Node.getQuantityFor(conn.b)) {
             Node.reduceQuantityBy(conn.a, Constants.TRANSFER_SPEED);
             Node.increaseQuantityBy(conn.b, Constants.TRANSFER_SPEED);
           } else if (Node.getQuantityFor(conn.a) < Node.getQuantityFor(conn.b)) {
             Node.increaseQuantityBy(conn.a, Constants.TRANSFER_SPEED);
             Node.reduceQuantityBy(conn.b, Constants.TRANSFER_SPEED);
+          }
+        } else {
+          if (Node.getQuantityFor(conn.a) > Node.getQuantityFor(conn.b)) {
+            Node.reduceQuantityBy(conn.a, difference/2);
+            Node.increaseQuantityBy(conn.b, difference/2);
+          } else {
+            Node.increaseQuantityBy(conn.a, difference/2);
+            Node.reduceQuantityBy(conn.b, difference/2);
           }
         }
       }

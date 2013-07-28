@@ -185,7 +185,8 @@ var G = {
         _g.nodes.some(function (node) {
           // Is releasing on node?
           if (_g.sel.selected_node !== node
-            && dist2D(node.pos, _g.sel.end_point_pos) < node.getQuantity()) {
+            && dist2D(node.pos, _g.sel.end_point_pos) < node.getQuantity()
+            && !_g.sel.selected_node.sharesConnectionWith(node)) {
             console.log("RELEASE PROPER");
             var conn = makeConnection(_g.sel.selected_node, node);
             node.increaseQuantity(_g.sel.quantity - conn.quantity);
@@ -205,7 +206,7 @@ var G = {
     }
   };
 
-function makeNode(x, y, quantity) {
+function makeNode (x, y, quantity) {
   return {
     pos: {x: x, y: y}
   , quantity: quantity
@@ -227,13 +228,26 @@ function makeNode(x, y, quantity) {
   , increaseQuantity: function (val) {
       this.quantity += val;
     }
+  , sharesConnection: function (conn) {
+      return this.connections.indexOf(conn) !== -1;
+    }
+  , sharesConnectionWith: function (node) {
+      var i;
+      for (i = 0; i < node.connections.length; i++) {
+        var conn = node.connections[i];
+        if (this.sharesConnection(conn)) {
+          return true;
+        }
+      }
+      return false;
+    }
   }
 }
 
-function makeConnection(a, b) {
+function makeConnection (a, b) {
   var length = dist2D(a.pos, b.pos) - a.getRadius() - b.getRadius();
   var quantity = length * LENGTH_FACTOR; // TODO: REFACTOR
-  return {
+  var conn = {
     a: a
   , b: b
   , quantity: quantity
@@ -249,6 +263,11 @@ function makeConnection(a, b) {
       }
     }
   }
+
+  a.connections.push(conn);
+  b.connections.push(conn);
+
+  return conn;
 }
 
 function dist2D(a, b) {

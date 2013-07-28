@@ -10,15 +10,20 @@
 		<div class='debug'>
 			<div><span class='key'>d</span> - Debug Mode: <span class='js-debug-enabled'>Enabled</span></div>
 			<div class='js-debug__panel debug__panel is-shown'>
-				<div>Minimum Node Value: <input class='js-debug-min-node-value debug__input' type='text' value="10" /></div>
+				<div>Minimum Node Value: <input class='js-debug-min-node-value debug__input' type='text' value="?" /></div>
+				<div>Radius To Quantity Conversion: <input class='js-debug-length-factor debug__input' type='text' value="?" /></div>
 			</div>
 			<div class='js-debug__panel debug__panel is-shown'>
 				<div><span class='key'>c</span> - Create Node (value is created)</div>
 				<div><span class='key'>x</span> - Delete Node (value is lost)</div>
 				<div><span class='key'>[</span> - Decrease Node Value</div>
 				<div><span class='key'>]</span> - Increase Node Value</div>
+				<div><span class='key'>s</span> - Save Level Data to JS</div>
 			</div>
 		</div>
 		<canvas id="game" width="800" height="600"></canvas>
+		<div class='js-debug__panel debug__panel is-shown'>
+			<pre class='js-save-data'></pre>
+		</div>
 	</body>
 </html>

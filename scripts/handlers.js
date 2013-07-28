@@ -66,6 +66,7 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
         , 88: DBG_deleteNode.bind(_g) // x key
         , 219: DBG_reduceHoveredNodeQuantity.bind(_g) // [ key
         , 221: DBG_increaseHoveredNodeQuantity.bind(_g) // ] key
+        , 83: DBG_saveLevel.bind(_g) // s key
         }
 
         if (keys[e.which]) keys[e.which]();
@@ -108,6 +109,29 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
       if (Debug.enabled && _g.context.hovered_node) {
         _g.removeNode(_g.context.hovered_node);
         _g.context.hovered_node = null;
+      }
+    }
+
+    function DBG_saveLevel () {
+      var _g = this;
+      if (Debug.enabled) {
+        var nodeCreation = "";
+        var nodeAddition = "";
+        var connectionCreationAndAddition = "";
+        var i;
+        for (i = 0; i < _g.nodes.length; i++) {
+          var node = _g.nodes[i];
+          node.__DBG_id = i;
+          nodeCreation += "var node_" + i + " = " + "Node.makeNode("
+           + node.pos.x + ", " + node.pos.y + ", " + node.quantity + ");\n";
+          nodeAddition += "_g.addNode(node_" + i + ");\n";
+        }
+        for (i = 0; i < _g.connections.length; i++) {
+          var connection = _g.connections[i];
+          connectionCreationAndAddition += "_g.addConnection(Connection.makeConnection(node_"
+           + connection.a.__DBG_id + ", node_" + connection.b.__DBG_id + ");\n";
+        }
+        Debug.displaySaveData(nodeCreation + nodeAddition + connectionCreationAndAddition);
       }
     }
 

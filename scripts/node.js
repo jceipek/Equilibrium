@@ -55,7 +55,6 @@ define(['debug', 'constants'], function (Debug, Constants) {
 
         ctx.arc(node.pos.x, node.pos.y, Constants.MIN_QUANTITY, 0, Math.PI*2, true);
         ctx.fill();
-        ctx.lineWidth = 3;
         ctx.stroke();
 
         if (Debug.enabled) {

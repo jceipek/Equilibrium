@@ -25,6 +25,7 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
           _g.canvas = $('#game')[0];
           if (_g.canvas.getContext) {
             _g.ctx = _g.canvas.getContext('2d');
+            _g.ctx.lineWidth = 3;
             _g.canvas.onmousemove = Handlers.move.bind(_g);
             _g.canvas.onmouseup = Handlers.clickUp.bind(_g);
             _g.canvas.onmouseleave = Handlers.clickUp.bind(_g);
@@ -37,16 +38,14 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
         }
       , populateGame: function () {
           var _g = this;
-          var a = Node.makeNode(200,300,30);
-          var b = Node.makeNode(100,90,21);
-          var c = Node.makeNode(500,300,10);
-          _g.addNode(a);
-          _g.addNode(b);
-          _g.addNode(c);
-          _g.addConnection(Connection.makeConnection(a,b));
-          //_g.addConnection(Connection.makeConnection(a,c));
-          //_g.addConnection(Connection.makeConnection(b,c));
-          //_g.context.selected_node = c;
+          var node_0 = Node.makeNode(100, 90, 25);
+          var node_1 = Node.makeNode(404, 370, 30);
+          var node_2 = Node.makeNode(429, 510, 30);
+          var node_4 = Node.makeNode(522, 493, 30);
+          _g.addNode(node_0);
+          _g.addNode(node_1);
+          _g.addNode(node_2);
+          _g.addNode(node_4);
         }
       , addNode: function (node) {
           var _g = this;
@@ -59,22 +58,22 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
           });
           var index = _g.nodes.indexOf(node);
           if (index !== -1) {
-            delete _g.nodes[index];
+            _g.nodes.splice(index, 1);
           }
         }
       , removeConnection: function (conn) { // UNSAFE (quantity is lost)
           var _g = this;
           var index = _g.connections.indexOf(conn);
           if (index !== -1) {
-            delete _g.connections[index];
+            _g.connections.splice(index, 1);
           }
           index = conn.a.connections.indexOf(conn);
           if (index !== -1) {
-            delete conn.a.connections[index];
+            conn.a.connections.splice(index, 1);
           }
           index = conn.b.connections.indexOf(conn);
           if (index !== -1) {
-            delete conn.b.connections[index];
+            conn.b.connections.splice(index, 1);
           }
         }
       , addConnection: function (conn) {

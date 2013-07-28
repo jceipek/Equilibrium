@@ -5,6 +5,11 @@ define(['zepto', 'constants'], function ($, Constants) {
       Constants.MIN_QUANTITY = parseFloat(e.target.value);
     })
 
+    $('.js-debug-length-factor').val(Constants.LENGTH_FACTOR);
+    $('.js-debug-length-factor').on('keypress blur focus', function (e) {
+      Constants.LENGTH_FACTOR = parseFloat(e.target.value);
+    })
+
     var Debug = {
       enabled: true
     , toggle: function () {
@@ -28,6 +33,9 @@ define(['zepto', 'constants'], function ($, Constants) {
           console.log("DEBUG: ");
           console.log(obj);
         }
+      }
+    , displaySaveData: function (data) {
+        $('.js-save-data').html(data);
       }
     }
 

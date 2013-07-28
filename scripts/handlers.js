@@ -10,7 +10,7 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
 
         _g.context.hovered_node = null;
         _g.nodes.some(function (node) {
-          if (Helpers.dist2D(node.pos, _g.context.curr_pos) < Node.getQuantityFor(node)) {
+          if (Helpers.dist2D(Node.getPosFor(node), _g.context.curr_pos) < Node.getQuantityFor(node)) {
             _g.context.hovered_node = node;
             return true;
           }
@@ -21,10 +21,11 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
         if (_g.context.selected_node === null) {
           // Is clicking on node?
           _g.nodes.some(function (node) {
-            if (Helpers.dist2D(node.pos, _g.context.curr_pos) < Node.getQuantityFor(node)) {
-              _g.context.selected_node = node;
-              _g.context.end_point_pos.x = node.pos.x;
-              _g.context.end_point_pos.y = node.pos.y;
+            if (Helpers.dist2D(Node.getPosFor(node), _g.context.curr_pos) < Node.getQuantityFor(node)) {
+              _g.selectNode(node);
+              var pos = Node.getPosFor(node);
+              _g.context.end_point_pos.x = pos.x;
+              _g.context.end_point_pos.y = pos.y;
               Debug.log("SELECT");
               return true;
             }
@@ -34,15 +35,16 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
       }
     , clickUp: function (e) {
         var _g = this;
-        if (_g.context.selected_node !== null) {
+        var selected_node = _g.context.selected_node;
+        if (selected_node !== null) {
           var is_proper_release = false;
           _g.nodes.some(function (node) {
             // Is releasing on node?
-            if (_g.context.selected_node !== node
-              && Helpers.dist2D(node.pos, _g.context.end_point_pos) < Node.getQuantityFor(node)
-              && !Node.sharesConnectionWith(_g.context.selected_node, node)) {
+            if (selected_node !== node
+              && Helpers.dist2D(Node.getPosFor(node), _g.context.end_point_pos) < Node.getQuantityFor(node)
+              && !Node.sharesConnectionWith(selected_node, node)) {
               Debug.log("RELEASE PROPER");
-              var conn = Connection.makeConnection(_g.context.selected_node, node);
+              var conn = Connection.makeConnection(selected_node, node);
               Node.increaseQuantityBy(node, _g.context.quantity - conn.quantity);
               _g.connections.push(conn);
               is_proper_release = true;
@@ -51,10 +53,11 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
           });
           if (!is_proper_release) {
             Debug.log("RELEASE");
-            _g.context.selected_node.quantity += _g.context.quantity;
+
+            Node.increaseQuantityBy(selected_node, _g.context.quantity);
           }
           _g.context.quantity = 0;
-          _g.context.selected_node = null;
+          _g.deselectNode();
         }
         Debug.log(_g.computeTotalQuantity());
       }
@@ -121,9 +124,10 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
         var i;
         for (i = 0; i < _g.nodes.length; i++) {
           var node = _g.nodes[i];
+          var pos = Node.getPosFor(node);
           node.__DBG_id = i;
           nodeCreation += "var node_" + i + " = " + "Node.makeNode("
-           + node.pos.x + ", " + node.pos.y + ", " + node.quantity + ");\n";
+           + pos.x + ", " + pos.y + ", " + Node.getRealQuantityFor(node) + ");\n";
           nodeAddition += "_g.addNode(node_" + i + ");\n";
         }
         for (i = 0; i < _g.connections.length; i++) {

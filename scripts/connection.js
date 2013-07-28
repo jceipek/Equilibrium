@@ -2,7 +2,9 @@ define(['constants', 'helpers', 'node'], function (Constants, Helpers, Node) {
 
     var Connection = {
       makeConnection: function (a, b) {
-        var length = Helpers.dist2D(a.pos, b.pos) - Node.getRadiusFor(a) - Node.getRadiusFor(b);
+        var a_pos = Node.getPosFor(a);
+        var b_pos = Node.getPosFor(b);
+        var length = Helpers.dist2D(a_pos, b_pos) - Node.getRadiusFor(a) - Node.getRadiusFor(b);
         var quantity = length * Constants.LENGTH_FACTOR; // TODO: REFACTOR
         var conn = {
           a: a
@@ -36,8 +38,10 @@ define(['constants', 'helpers', 'node'], function (Constants, Helpers, Node) {
         }
       }
     , draw: function (ctx, connection) {
-        ctx.moveTo(connection.a.pos.x, connection.a.pos.y);
-        ctx.lineTo(connection.b.pos.x, connection.b.pos.y);
+        var a_pos = Node.getPosFor(connection.a);
+        var b_pos = Node.getPosFor(connection.b);
+        ctx.moveTo(a_pos.x, a_pos.y);
+        ctx.lineTo(b_pos.x, b_pos.y);
       }
     }
 

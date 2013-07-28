@@ -30,15 +30,33 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
             // CANVAS IS NOT SUPPORTED
           }
         }
+      , selectNode: function (node) {
+          var _g = this;
+          _g.context.selected_node = node;
+        }
+      , deselectNode: function () {
+          var _g = this;
+          _g.context.selected_node = null;
+        }
       , populateGame: function () {
           var _g = this;
-          var node_0 = Node.makeNode(100, 90, 25);
+          // var node_0 = Node.makeNode(100, 90, 25);
+          // var node_1 = Node.makeNode(404, 370, 30);
+          // var node_2 = Node.makeNode(429, 510, 30);
+          // var node_4 = Node.makeNode(522, 493, 30);
+          // _g.addNode(node_0);
+          // _g.addNode(node_1);
+          // _g.addNode(node_2);
+          // _g.addNode(node_4);
+          var node_0 = Node.makeNode(100, 90, 42);
           var node_1 = Node.makeNode(404, 370, 30);
           var node_2 = Node.makeNode(429, 510, 30);
-          var node_4 = Node.makeNode(522, 493, 30);
+          var node_3 = Node.makeNode(522, 493, 30);
+          var node_4 = Node.makeNode(737, 219, 30);
           _g.addNode(node_0);
           _g.addNode(node_1);
           _g.addNode(node_2);
+          _g.addNode(node_3);
           _g.addNode(node_4);
         }
       , addNode: function (node) {
@@ -91,32 +109,10 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
             Debug.log("\t"+connection.quantity);
           });
           _g.nodes.forEach(function (node) {
-            total += node.quantity;
-            Debug.log("\t"+node.quantity);
+            total += Node.getRealQuantityFor(node);
+            Debug.log("\t"+Node.getRealQuantityFor(node));
           });
           return total;
-        }
-      , simulateNewConnection: function () {
-          var _g = this;
-          if (_g.context.selected_node !== null) {
-            var length = Helpers.dist2D(_g.context.selected_node.pos, _g.context.curr_pos);
-            var quantity = length * Constants.LENGTH_FACTOR; // TODO: REFACTOR
-            var max_quantity = _g.context.selected_node.quantity + _g.context.quantity - Constants.MIN_QUANTITY;
-            var max_length = max_quantity / Constants.LENGTH_FACTOR;
-            var des_length = Math.min(length, max_length);
-            _g.context.selected_node.quantity += _g.context.quantity;
-            _g.context.quantity = Math.min(max_quantity, quantity);
-            _g.context.selected_node.quantity -= _g.context.quantity;
-
-            if (des_length > 0) {
-              var real_x_diff = _g.context.curr_pos.x - _g.context.selected_node.pos.x;
-              var real_y_diff = _g.context.curr_pos.y - _g.context.selected_node.pos.y;
-              var des_x_diff = real_x_diff * des_length/length;
-              var des_y_diff = real_y_diff * des_length/length;
-              _g.context.end_point_pos.x = _g.context.selected_node.pos.x + des_x_diff;
-              _g.context.end_point_pos.y = _g.context.selected_node.pos.y + des_y_diff;
-            }
-          }
         }
       , render: function () {
           var _g = this;
@@ -129,8 +125,10 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
           });
 
           if (_g.context.selected_node !== null) {
-            _g.ctx.moveTo(_g.context.selected_node.pos.x, _g.context.selected_node.pos.y);
-            _g.ctx.lineTo(_g.context.end_point_pos.x, _g.context.end_point_pos.y);
+            var selected_node_pos = Node.getPosFor(_g.context.selected_node);
+            var end_point_pos = _g.context.end_point_pos;
+            _g.ctx.moveTo(selected_node_pos.x, selected_node_pos.y);
+            _g.ctx.lineTo(end_point_pos.x, end_point_pos.y);
           }
 
           _g.ctx.stroke();

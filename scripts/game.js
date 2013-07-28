@@ -4,12 +4,6 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
     var G = {
         ctx: null
       , canvas: null
-      , time: {
-          physics_time: 0.0
-        , PHYSICS_DT: 10.0
-        , current_time: (new Date()).getTime()
-        , time_accumulator: 0.0
-        }
       , connections: []
       , nodes: []
       , context: {
@@ -101,38 +95,6 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
             Debug.log("\t"+node.quantity);
           });
           return total;
-        }
-      , gameLoop: function () {
-          var _g = this;
-          var new_time = (new Date).getTime();
-          var time_since_last_frame = new_time - _g.time.current_time;
-          // Avoid the spiral of death:
-          time_since_last_frame = Math.min(time_since_last_frame, Constants.MAX_TIME_FOR_FRAME);
-          _g.time.current_time = new_time;
-
-          _g.time.time_accumulator += time_since_last_frame;
-
-          while (_g.time.time_accumulator >= _g.time.PHYSICS_DT) {
-            // previous_state = current_state
-            _g.simulate();
-            _g.time.physics_time += _g.time.PHYSICS_DT;
-            _g.time.time_accumulator -= _g.time.PHYSICS_DT;
-          }
-
-          var state_blending_factor = _g.time.time_accumulator / _g.time.PHYSICS_DT;
-
-          //State state = current_state*state_blending_factor + previous_state * ( 1.0 - state_blending_factor );
-
-          _g.render();
-
-          setTimeout(_g.gameLoop.bind(_g), Constants.IDEAL_TIME_FOR_FRAME);
-        }
-      , simulate: function () {
-          var _g = this;
-          _g.connections.forEach(function (connection) {
-            Connection.simulate(connection);
-          });
-          _g.simulateNewConnection();
         }
       , simulateNewConnection: function () {
           var _g = this;

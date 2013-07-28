@@ -9,7 +9,7 @@ require.config({
   }
 });
 
-require(['objectwatch-polyfill', 'domReady!', 'game'], function (_, _, G) {
+require(['objectwatch-polyfill', 'domReady!', 'game', 'sim'], function (_, _, G, Sim) {
     G.init();
-    G.gameLoop();
+    Sim.gameLoop();
   });

@@ -1,15 +1,18 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title></title>
-    <style>
-      canvas {
-        background-color: white;
-      }
-    </style>
+		<title>Equilibrium - Game Prototype</title>
+		<link rel="stylesheet" type="text/css" href="normalize.css">
+	    <link rel="stylesheet" type="text/css" href="main.css">
+	    <script data-main="scripts/main" src="scripts/require.js"></script>
 	</head>
 	<body>
 		<canvas id="game" width="800" height="800"></canvas>
-		<script type="text/javascript" src="equilibrium_game.js"></script>
+		<div class='debug'>
+			<div><span class='key'>d</span> - Debug Mode: <span class='js-debug-enabled'>Enabled</span></div>
+			<div class='js-debug__commands debug__commands is-shown'>
+				<div><span class='key'>c</span> - Create Node</div>
+			</div>
+		</div>
 	</body>
 </html>

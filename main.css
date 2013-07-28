@@ -1,0 +1,26 @@
+canvas {
+	background-color: white;
+}
+
+.debug {
+	color: #aaa;
+	float: right;
+	font-family: OpenSans, 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+	margin: 1em;
+}
+
+.debug__commands {
+	margin-left: 3em;
+}
+
+.debug__commands {
+	display: none;
+}
+
+.debug__commands.is-shown {
+	display: block;
+}
+
+.key {
+	color: #777;
+}

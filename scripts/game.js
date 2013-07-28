@@ -53,15 +53,24 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
         }
       , removeNode: function (node) { // UNSAFE (quantity is lost)
           var _g = this;
-          node.connections.forEach(function (conn) {
+          var index;
+          var connectionsToRemove = [];
+          for (index = 0; index < node.connections.length; index++) {
+            var conn = node.connections[index];
+            connectionsToRemove.push(conn);
+          }
+          for (index = 0; index < connectionsToRemove.length; index++) {
+            var conn = connectionsToRemove[index];
             _g.removeConnection(conn);
-          });
-          var index = _g.nodes.indexOf(node);
+          }
+
+          index = _g.nodes.indexOf(node);
           if (index !== -1) {
             _g.nodes.splice(index, 1);
           }
         }
       , removeConnection: function (conn) { // UNSAFE (quantity is lost)
+          Debug.log("REMOVE Connection");
           var _g = this;
           var index = _g.connections.indexOf(conn);
           if (index !== -1) {
@@ -174,5 +183,6 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
         }
       };
 
+    window.G = G;
     return G;
   });

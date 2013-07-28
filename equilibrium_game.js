@@ -1,8 +1,16 @@
 var TRANSFER_SPEED = 1;
 var LENGTH_FACTOR = 0.1;
 var MIN_QUANTITY = 10;
+var IDEAL_TIME_FOR_FRAME = 50;
+var MAX_TIME_FOR_FRAME = 250.0;
 var G = {
     ctx: null
+  , time: {
+      physics_time: 0.0
+    , PHYSICS_DT: 10.0
+    , current_time: (new Date()).getTime()
+    , time_accumulator: 0.0
+    }
   , connections: []
   , nodes: []
   , sel: {
@@ -15,96 +23,125 @@ var G = {
   , init: function () {
       var canvas = document.getElementById('game');
       if (canvas.getContext) {
-        this.ctx = canvas.getContext('2d');
-        this.sel.offset.x = -canvas.offsetLeft;
-        this.sel.offset.y = -canvas.offsetTop;
-        canvas.onmousemove = this.moveHandler.bind(this);
-        canvas.onmouseup = this.clickUpHandler.bind(this);
-        canvas.onmousedown = this.clickDownHandler.bind(this);
-        this.populateGame();
+        var _g = this;
+        _g.ctx = canvas.getContext('2d');
+        _g.sel.offset.x = -canvas.offsetLeft;
+        _g.sel.offset.y = -canvas.offsetTop;
+        canvas.onmousemove = _g.moveHandler.bind(_g);
+        canvas.onmouseup = _g.clickUpHandler.bind(_g);
+        canvas.onmousedown = _g.clickDownHandler.bind(_g);
+        _g.populateGame();
       } else {
         // CANVAS IS NOT SUPPORTED
       }
     }
   , populateGame: function () {
+      var _g = this;
       var a = makeNode(200,300,30);
       var b = makeNode(100,90,21);
       var c = makeNode(500,300,10);
-      this.nodes.push(a);
-      this.nodes.push(b);
-      this.nodes.push(c);
-      this.connections.push(makeConnection(a,b));
-      //this.connections.push(makeConnection(a,c));
-      //this.connections.push(makeConnection(b,c));
-      //this.sel.selected_node = c;
+      _g.nodes.push(a);
+      _g.nodes.push(b);
+      _g.nodes.push(c);
+      _g.connections.push(makeConnection(a,b));
+      //_g.connections.push(makeConnection(a,c));
+      //_g.connections.push(makeConnection(b,c));
+      //_g.sel.selected_node = c;
     }
   , computeTotalQuantity: function () {
+      var _g = this;
       var total = 0;
-      this.connections.forEach(function (connection) {
+      _g.connections.forEach(function (connection) {
         total += connection.quantity;
       });
-      this.nodes.forEach(function (node) {
+      _g.nodes.forEach(function (node) {
         total += node.quantity;
       });
       return total;
     }
+  , gameLoop: function () {
+    var _g = this;
+    var new_time = (new Date).getTime();
+    var time_since_last_frame = new_time - _g.time.current_time;
+    // Avoid the spiral of death:
+    time_since_last_frame = Math.min(time_since_last_frame, MAX_TIME_FOR_FRAME);
+    _g.time.current_time = new_time;
+
+    _g.time.time_accumulator += time_since_last_frame;
+
+    while (_g.time.time_accumulator >= _g.time.PHYSICS_DT) {
+      // previous_state = current_state
+      _g.simulate();
+      _g.time.physics_time += _g.time.PHYSICS_DT;
+      _g.time.time_accumulator -= _g.time.PHYSICS_DT;
+    }
+
+    var state_blending_factor = _g.time.time_accumulator / _g.time.PHYSICS_DT;
+
+    //State state = current_state*state_blending_factor + previous_state * ( 1.0 - state_blending_factor );
+
+    _g.render();
+
+    setTimeout(_g.gameLoop.bind(_g), IDEAL_TIME_FOR_FRAME);
+  }
   , simulate: function () {
-      this.connections.forEach(function (connection) {
+      var _g = this;
+      _g.connections.forEach(function (connection) {
         connection.simulate();
       });
-      this.simulateNewConnection();
+      _g.simulateNewConnection();
     }
   , simulateNewConnection: function () {
-      var that = this;
-      if (that.sel.selected_node !== null) {
-        var length = dist2D(that.sel.selected_node.pos, that.sel.curr_pos);
+      var _g = this;
+      if (_g.sel.selected_node !== null) {
+        var length = dist2D(_g.sel.selected_node.pos, _g.sel.curr_pos);
         var quantity = length * LENGTH_FACTOR; // TODO: REFACTOR
-        var max_quantity = that.sel.selected_node.quantity + that.sel.quantity - MIN_QUANTITY;
+        var max_quantity = _g.sel.selected_node.quantity + _g.sel.quantity - MIN_QUANTITY;
         var max_length = max_quantity / LENGTH_FACTOR;
         var des_length = Math.min(length, max_length);
-        that.sel.selected_node.quantity += that.sel.quantity;
-        that.sel.quantity = Math.min(max_quantity, quantity);
-        that.sel.selected_node.quantity -= that.sel.quantity;
+        _g.sel.selected_node.quantity += _g.sel.quantity;
+        _g.sel.quantity = Math.min(max_quantity, quantity);
+        _g.sel.selected_node.quantity -= _g.sel.quantity;
 
         if (des_length > 0) {
-          var real_x_diff = that.sel.curr_pos.x - that.sel.selected_node.pos.x;
-          var real_y_diff = that.sel.curr_pos.y - that.sel.selected_node.pos.y;
+          var real_x_diff = _g.sel.curr_pos.x - _g.sel.selected_node.pos.x;
+          var real_y_diff = _g.sel.curr_pos.y - _g.sel.selected_node.pos.y;
           var des_x_diff = real_x_diff * des_length/length;
           var des_y_diff = real_y_diff * des_length/length;
-          that.sel.end_point_pos.x = that.sel.selected_node.pos.x + des_x_diff;
-          that.sel.end_point_pos.y = that.sel.selected_node.pos.y + des_y_diff;
+          _g.sel.end_point_pos.x = _g.sel.selected_node.pos.x + des_x_diff;
+          _g.sel.end_point_pos.y = _g.sel.selected_node.pos.y + des_y_diff;
         }
       }
     }
-  , visualize: function () {
-      var that = this;
-      that.ctx.clearRect(0, 0, 1000, 1000);
+  , render: function () {
+      var _g = this;
+      _g.ctx.clearRect(0, 0, 1000, 1000);
 
-      that.ctx.beginPath();
+      _g.ctx.beginPath();
 
-      that.connections.forEach(function (connection) {
-        that.drawConnection(that.ctx, connection);
+      _g.connections.forEach(function (connection) {
+        _g.drawConnection(_g.ctx, connection);
       });
 
-      if (that.sel.selected_node !== null) {
-        that.ctx.moveTo(that.sel.selected_node.pos.x, that.sel.selected_node.pos.y);
-        that.ctx.lineTo(that.sel.end_point_pos.x, that.sel.end_point_pos.y);
+      if (_g.sel.selected_node !== null) {
+        _g.ctx.moveTo(_g.sel.selected_node.pos.x, _g.sel.selected_node.pos.y);
+        _g.ctx.lineTo(_g.sel.end_point_pos.x, _g.sel.end_point_pos.y);
       }
 
-      that.ctx.stroke();
+      _g.ctx.stroke();
 
-      that.nodes.forEach(function (node) {
-        that.ctx.beginPath();
-        that.ctx.fillStyle = "black";
-        that.drawNode(that.ctx, node);
-        that.ctx.fill();
+      _g.nodes.forEach(function (node) {
+        _g.ctx.beginPath();
+        _g.ctx.fillStyle = "black";
+        _g.drawNode(_g.ctx, node);
+        _g.ctx.fill();
 
-        that.ctx.beginPath();
+        _g.ctx.beginPath();
         // Is hovering over node?
-        if (dist2D(node.pos, that.sel.curr_pos) < node.getQuantity()) {
-          that.ctx.fillStyle = "green";
-          that.drawNode(that.ctx, node);
-          that.ctx.fill();
+        if (dist2D(node.pos, _g.sel.curr_pos) < node.getQuantity()) {
+          _g.ctx.fillStyle = "green";
+          _g.drawNode(_g.ctx, node);
+          _g.ctx.fill();
         }
       });
 
@@ -118,58 +155,49 @@ var G = {
       ctx.lineTo(connection.b.pos.x,connection.b.pos.y);
     }
   , moveHandler: function (e) {
-      this.sel.curr_pos.x = e.x + this.sel.offset.x;
-      this.sel.curr_pos.y = e.y + this.sel.offset.y;
+      var _g = this;
+      _g.sel.curr_pos.x = e.x + _g.sel.offset.x;
+      _g.sel.curr_pos.y = e.y + _g.sel.offset.y;
     }
   , clickDownHandler: function (e) {
-      var that = this;
-      if (that.sel.selected_node === null) {
+      var _g = this;
+      if (_g.sel.selected_node === null) {
         // Is clicking on node?
-        that.nodes.some(function (node) {
-          if (dist2D(node.pos, that.sel.curr_pos) < node.getQuantity()) {
-            that.sel.selected_node = node;
-            that.sel.end_point_pos.x = node.pos.x;
-            that.sel.end_point_pos.y = node.pos.y;
+        _g.nodes.some(function (node) {
+          if (dist2D(node.pos, _g.sel.curr_pos) < node.getQuantity()) {
+            _g.sel.selected_node = node;
+            _g.sel.end_point_pos.x = node.pos.x;
+            _g.sel.end_point_pos.y = node.pos.y;
             console.log("SELECT");
             return true;
           }
         });
       }
-      console.log(that.computeTotalQuantity());
+      //console.log(_g.computeTotalQuantity());
     }
   , clickUpHandler: function (e) {
-      var that = this;
-      if (that.sel.selected_node !== null) {
+      var _g = this;
+      if (_g.sel.selected_node !== null) {
         var is_proper_release = false;
-        that.nodes.some(function (node) {
+        _g.nodes.some(function (node) {
           // Is releasing on node?
-          if (dist2D(node.pos, that.sel.end_point_pos) < node.getQuantity()) {
-            // There's a problem here:
-            // Theoretically, a connection should not be possible if
-            // the connection can't reach to the middle (based on current ruleset).
-            // Right now, quantity is being destroyed, I think.
-            // However, this is bad from an interaction perspective.
-            // Proposed fix: Change ruleset to take radius into account at all times.
-            // Treat connections as points on the circumference, not the middle, while
-            // transferring quantity.
+          if (dist2D(node.pos, _g.sel.end_point_pos) < node.getQuantity()) {
             console.log("RELEASE PROPER");
-            var conn = makeConnection(that.sel.selected_node, node);
-            // TODO: fix leak?
-            //console.log(that.sel.quantity - conn.quantity);
-            node.increaseQuantity(that.sel.quantity - conn.quantity);
-            that.connections.push(conn);
+            var conn = makeConnection(_g.sel.selected_node, node);
+            node.increaseQuantity(_g.sel.quantity - conn.quantity);
+            _g.connections.push(conn);
             is_proper_release = true;
             return true;
           }
         });
         if (!is_proper_release) {
           console.log("RELEASE");
-          that.sel.selected_node.quantity += that.sel.quantity;
+          _g.sel.selected_node.quantity += _g.sel.quantity;
         }
-        that.sel.quantity = 0;
-        that.sel.selected_node = null;
+        _g.sel.quantity = 0;
+        _g.sel.selected_node = null;
       }
-      console.log(that.computeTotalQuantity());
+      //console.log(_g.computeTotalQuantity());
     }
   };
 
@@ -226,8 +254,4 @@ function dist2D(a, b) {
 }
 
 G.init();
-console.log(G.computeTotalQuantity());
-setInterval(function () {
-  G.visualize();
-  G.simulate();
-}, 50);
+G.gameLoop();

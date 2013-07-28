@@ -1,8 +1,22 @@
+/*body {
+   -webkit-user-select: none;
+   -moz-user-select: -moz-none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}*/
+
 canvas {
 	background-color: white;
 	border: dashed;
 	border-color: #ddd;
 	margin: 1em;
+	cursor: crosshair;
+}
+
+canvas:active, canvas:focus {
+	/* Bug in lots of browsers makes this not work */
+	cursor: crosshair;
 }
 
 .debug {
@@ -10,6 +24,12 @@ canvas {
 	float: right;
 	font-family: OpenSans, 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
 	margin: 1em;
+
+/*   -webkit-user-select: text;
+   -moz-user-select: -moz-text;
+   -webkit-user-select: text;
+   -ms-user-select: text;
+   user-select: text;*/
 }
 
 .debug__input {

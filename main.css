@@ -1,10 +1,18 @@
-/*body {
+body {
    -webkit-user-select: none;
    -moz-user-select: -moz-none;
    -webkit-user-select: none;
    -ms-user-select: none;
    user-select: none;
-}*/
+}
+
+.debug__panel__data {
+   -webkit-user-select: text;
+   -moz-user-select: -moz-text;
+   -webkit-user-select: text;
+   -ms-user-select: text;
+   user-select: text;
+}
 
 canvas {
 	background-color: white;
@@ -15,7 +23,8 @@ canvas {
 }
 
 canvas:active, canvas:focus {
-	/* Bug in lots of browsers makes this not work */
+	/* Bug in lots of browsers makes this not work once a
+	 selectable text node is a sibling */
 	cursor: crosshair;
 }
 
@@ -24,12 +33,6 @@ canvas:active, canvas:focus {
 	float: right;
 	font-family: OpenSans, 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
 	margin: 1em;
-
-/*   -webkit-user-select: text;
-   -moz-user-select: -moz-text;
-   -webkit-user-select: text;
-   -ms-user-select: text;
-   user-select: text;*/
 }
 
 .debug__input {

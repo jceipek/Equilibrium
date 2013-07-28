@@ -3,7 +3,7 @@ define(['constants', 'game', 'connection'], function (Constants, G, Connection) 
     var Sim = {
       time: {
           physics_time: 0.0
-        , PHYSICS_DT: 10.0
+        , PHYSICS_DT: Constants.PHYSICS_DT
         , current_time: (new Date()).getTime()
         , time_accumulator: 0.0
         }

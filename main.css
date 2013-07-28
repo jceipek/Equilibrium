@@ -1,5 +1,8 @@
 canvas {
 	background-color: white;
+	border: dashed;
+	border-color: #ddd;
+	margin: 1em;
 }
 
 .debug {
@@ -9,15 +12,21 @@ canvas {
 	margin: 1em;
 }
 
-.debug__commands {
-	margin-left: 3em;
+.debug__input {
+	color: #aaa;
+	width: 3em;
 }
 
-.debug__commands {
+.debug__panel {
+	margin-left: 3em;
+	margin-bottom: 1em;
+}
+
+.debug__panel {
 	display: none;
 }
 
-.debug__commands.is-shown {
+.debug__panel.is-shown {
 	display: block;
 }
 

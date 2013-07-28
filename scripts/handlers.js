@@ -3,6 +3,8 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
     var Handlers = {
       move: function (e) {
         var _g = this;
+        _g.context.offset.x = -_g.canvas.offsetLeft;
+        _g.context.offset.y = -_g.canvas.offsetTop;
         _g.context.curr_pos.x = e.x + _g.context.offset.x;
         _g.context.curr_pos.y = e.y + _g.context.offset.y;
 
@@ -103,7 +105,7 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
 
     function DBG_deleteNode () {
       var _g = this;
-      if (Debug.enabled) {
+      if (Debug.enabled && _g.context.hovered_node) {
         _g.removeNode(_g.context.hovered_node);
         _g.context.hovered_node = null;
       }

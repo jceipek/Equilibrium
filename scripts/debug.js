@@ -1,4 +1,9 @@
-define(['zepto'], function ($) {
+define(['zepto', 'constants'], function ($, Constants) {
+
+    $('.js-debug-min-node-value').val(Constants.MIN_QUANTITY);
+    $('.js-debug-min-node-value').on('keypress blur focus', function (e) {
+      Constants.MIN_QUANTITY = parseFloat(e.target.value);
+    })
 
     var Debug = {
       enabled: true
@@ -7,10 +12,10 @@ define(['zepto'], function ($) {
 
         if (this.enabled) {
           $('.js-debug-enabled').html('Enabled');
-          $('.js-debug__commands').addClass('is-shown');
+          $('.js-debug__panel').addClass('is-shown');
         } else {
           $('.js-debug-enabled').html('Disabled');
-          $('.js-debug__commands').removeClass('is-shown');
+          $('.js-debug__panel').removeClass('is-shown');
         }
       }
     , log: function (text) {

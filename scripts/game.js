@@ -3,6 +3,7 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
 
     var G = {
         ctx: null
+      , canvas: null
       , time: {
           physics_time: 0.0
         , PHYSICS_DT: 10.0
@@ -20,16 +21,14 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
         , offset: {x: 0, y: 0}
         }
       , init: function () {
-          var canvas = $('#game')[0];
-          if (canvas.getContext) {
-            var _g = this;
-            _g.ctx = canvas.getContext('2d');
-            _g.context.offset.x = -canvas.offsetLeft;
-            _g.context.offset.y = -canvas.offsetTop;
-            canvas.onmousemove = Handlers.move.bind(_g);
-            canvas.onmouseup = Handlers.clickUp.bind(_g);
-            canvas.onmouseleave = Handlers.clickUp.bind(_g);
-            canvas.onmousedown = Handlers.clickDown.bind(_g);
+          var _g = this;
+          _g.canvas = $('#game')[0];
+          if (_g.canvas.getContext) {
+            _g.ctx = _g.canvas.getContext('2d');
+            _g.canvas.onmousemove = Handlers.move.bind(_g);
+            _g.canvas.onmouseup = Handlers.clickUp.bind(_g);
+            _g.canvas.onmouseleave = Handlers.clickUp.bind(_g);
+            _g.canvas.onmousedown = Handlers.clickDown.bind(_g);
             document.body.onkeydown = Handlers.keyDown.bind(_g);
             _g.populateGame();
           } else {
@@ -53,7 +52,7 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
           var _g = this;
           _g.nodes.push(node);
         }
-      , removeNode: function (node) {
+      , removeNode: function (node) { // UNSAFE (quantity is lost)
           var _g = this;
           node.connections.forEach(function (conn) {
             _g.removeConnection(conn);
@@ -63,7 +62,7 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
             delete _g.nodes[index];
           }
         }
-      , removeConnection: function (conn) {
+      , removeConnection: function (conn) { // UNSAFE (quantity is lost)
           var _g = this;
           var index = _g.connections.indexOf(conn);
           if (index !== -1) {
@@ -166,18 +165,12 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
 
           _g.ctx.stroke();
 
-          _g.ctx.beginPath();
-          _g.ctx.fillStyle = "black";
           _g.nodes.forEach(function (node) {
             Node.draw(_g.ctx, node);
           });
-          _g.ctx.fill();
 
           if (_g.context.hovered_node) {
-            _g.ctx.beginPath();
-            _g.ctx.fillStyle = "green";
-            Node.draw(_g.ctx, _g.context.hovered_node);
-            _g.ctx.fill();
+            Node.draw(_g.ctx, _g.context.hovered_node, {highlighted: true});
           }
         }
       };

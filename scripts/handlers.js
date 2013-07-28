@@ -61,6 +61,7 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
         var keys = {
           68: DBG_toggle // d key
         , 67: DBG_createNode.bind(_g) // c key
+        , 88: DBG_deleteNode.bind(_g) // x key
         , 219: DBG_reduceHoveredNodeQuantity.bind(_g) // [ key
         , 221: DBG_increaseHoveredNodeQuantity.bind(_g) // ] key
         }
@@ -97,6 +98,14 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
         var node = Node.makeNode(_g.context.curr_pos.x, _g.context.curr_pos.y, 30);
         _g.addNode(node);
         _g.context.hovered_node = node;
+      }
+    }
+
+    function DBG_deleteNode () {
+      var _g = this;
+      if (Debug.enabled) {
+        _g.removeNode(_g.context.hovered_node);
+        _g.context.hovered_node = null;
       }
     }
 

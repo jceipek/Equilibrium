@@ -53,6 +53,31 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
           var _g = this;
           _g.nodes.push(node);
         }
+      , removeNode: function (node) {
+          var _g = this;
+          node.connections.forEach(function (conn) {
+            _g.removeConnection(conn);
+          });
+          var index = _g.nodes.indexOf(node);
+          if (index !== -1) {
+            delete _g.nodes[index];
+          }
+        }
+      , removeConnection: function (conn) {
+          var _g = this;
+          var index = _g.connections.indexOf(conn);
+          if (index !== -1) {
+            delete _g.connections[index];
+          }
+          index = conn.a.connections.indexOf(conn);
+          if (index !== -1) {
+            delete conn.a.connections[index];
+          }
+          index = conn.b.connections.indexOf(conn);
+          if (index !== -1) {
+            delete conn.b.connections[index];
+          }
+        }
       , addConnection: function (conn) {
           var _g = this;
           _g.connections.push(conn);
@@ -141,20 +166,19 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
 
           _g.ctx.stroke();
 
+          _g.ctx.beginPath();
+          _g.ctx.fillStyle = "black";
           _g.nodes.forEach(function (node) {
-            _g.ctx.beginPath();
-            _g.ctx.fillStyle = "black";
             Node.draw(_g.ctx, node);
-            _g.ctx.fill();
-
-            _g.ctx.beginPath();
-            // Is hovering over node?
-            if (Helpers.dist2D(node.pos, _g.context.curr_pos) < Node.getQuantityFor(node)) {
-              _g.ctx.fillStyle = "green";
-              Node.draw(_g.ctx, node);
-              _g.ctx.fill();
-            }
           });
+          _g.ctx.fill();
+
+          if (_g.context.hovered_node) {
+            _g.ctx.beginPath();
+            _g.ctx.fillStyle = "green";
+            Node.draw(_g.ctx, _g.context.hovered_node);
+            _g.ctx.fill();
+          }
         }
       };
 

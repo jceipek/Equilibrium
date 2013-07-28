@@ -19,7 +19,7 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
           _g.canvas = $('#game')[0];
           if (_g.canvas.getContext) {
             _g.ctx = _g.canvas.getContext('2d');
-            _g.ctx.lineWidth = 3;
+            _g.ctx.lineWidth = Constants.visual.LINE_WIDTH;
             _g.canvas.onmousemove = Handlers.move.bind(_g);
             _g.canvas.onmouseup = Handlers.clickUp.bind(_g);
             _g.canvas.onmouseleave = Handlers.clickUp.bind(_g);
@@ -120,7 +120,7 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
         }
       , render: function () {
           var _g = this;
-          _g.ctx.clearRect(0, 0, 1000, 1000);
+          _g.ctx.clearRect(0, 0, G.canvas.width, G.canvas.height);
 
           _g.ctx.beginPath();
 

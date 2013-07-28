@@ -98,7 +98,7 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
     function DBG_createNode () {
       var _g = this;
       if (Debug.enabled) {
-        var node = Node.makeNode(_g.context.curr_pos.x, _g.context.curr_pos.y, 30);
+        var node = Node.makeNode(_g.context.curr_pos.x, _g.context.curr_pos.y, Constants.DBG_CREATE_NODE_QUANTITY);
         _g.addNode(node);
         _g.context.hovered_node = node;
       }

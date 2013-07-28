@@ -45,7 +45,6 @@ define(['debug', 'constants'], function (Debug, Constants) {
         ctx.fillStyle = "black";
         ctx.arc(node.pos.x, node.pos.y, this.getRadiusFor(node), 0, Math.PI*2, true);
         ctx.fill();
-        //ctx.stroke();
 
         ctx.beginPath();
         if (highlighted)

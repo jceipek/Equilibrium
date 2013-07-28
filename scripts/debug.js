@@ -11,7 +11,7 @@ define(['zepto', 'constants'], function ($, Constants) {
     })
 
     var Debug = {
-      enabled: true
+      enabled: false
     , toggle: function () {
         this.enabled = !this.enabled;
 

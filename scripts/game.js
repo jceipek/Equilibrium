@@ -105,12 +105,12 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
           var _g = this;
           var total = 0;
           _g.connections.forEach(function (connection) {
-            total += connection.quantity;
-            Debug.log("\t"+connection.quantity);
+            total += Connection.getQuantityFor(connection);
+            Debug.log("\t" + Connection.getQuantityFor(connection));
           });
           _g.nodes.forEach(function (node) {
             total += Node.getRealQuantityFor(node);
-            Debug.log("\t"+Node.getRealQuantityFor(node));
+            Debug.log("\t" + Node.getRealQuantityFor(node));
           });
           return total;
         }

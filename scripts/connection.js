@@ -10,12 +10,27 @@ define(['constants', 'helpers', 'node'], function (Constants, Helpers, Node) {
           a: a
         , b: b
         , quantity: quantity
+        , previous_state: {
+            quantity: quantity
+          }
+        , current_state: {
+            quantity: quantity
+          }
         }
 
         a.connections.push(conn);
         b.connections.push(conn);
 
         return conn;
+      }
+    , increaseQuantityBy: function (conn, val) {
+        conn.current_state.quantity += val;
+      }
+    , reduceQuantityBy: function (conn, val) {
+        conn.current_state.quantity -= val;
+      }
+    , getQuantityFor: function (conn) {
+        return conn.current_state.quantity;
       }
     , simulate: function (conn) {
         var difference = Math.abs(Node.getQuantityFor(conn.a) - Node.getQuantityFor(conn.b));

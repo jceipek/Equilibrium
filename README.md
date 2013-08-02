@@ -12,8 +12,11 @@ You can access debug mode with 'd' and mess around by adding, deleting, and resi
 The test data in the prototype at the moment demonstrates that the order in which connections are made is important in many cases.
 
 The prototype is set up like a pretty static puzzle game at the moment, but that's just because I haven't tried out other things yet, such as:
+
 1. There could be moveable nodes that can be dragged around with connections using spring physics. Then the node structure could play a huge role in the final solution. Imagine dragging a chain of nodes around to reach further.
+
 2. Nodes could have different colors; the colors could limit which nodes could connect to which other nodes. For example, a red node might connect to red and yellow nodes and a green node might connect to green and yellow nodes. Connecting the full network would then be more challenging.
+
 3. At the moment, the fact that mass travels along connections is implicit. If this becomes a real game, I would like to show the mass moving along connections like dew on a spider's web. As a variation on the existing mechanics, the specific "stuff" traveling between nodes might vary; imagine a game variant in which certain nodes must be disconnected to avoid destroying other nodes. This game could quickly become frantic as the player reconfigures the network in order to save it.
 
 Where does the Rift come in?

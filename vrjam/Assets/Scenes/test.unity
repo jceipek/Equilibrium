@@ -501,7 +501,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 52987960}
   m_GameObject: {fileID: 300014827}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: .5
@@ -864,8 +864,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_node_count: 300
+  m_node_min_mass: 1
+  m_node_max_mass: 2
+  m_connection_count: 100
   m_sphere_radius: 20
-  m_connection_count: 1000
+  m_allow_nodes_inside_sphere: 1
 --- !u!4 &963521322
 Transform:
   m_ObjectHideFlags: 0
@@ -1328,7 +1331,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 19610768}
   m_GameObject: {fileID: 1667125536}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: .5
@@ -1384,7 +1387,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 1326375910}
   m_GameObject: {fileID: 1750741228}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: .5
@@ -1504,7 +1507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df129cd0d5ad54e1d84082b8dfff242f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 0
+  m_speed: 10
 --- !u!114 &1937589557
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -52,7 +52,11 @@ public class MassConservationTester : MonoBehaviour {
         free_mass = 0.0f;
         foreach (Mass mass_object in mass_objects) {
             total_mass += mass_object.Get();
-            free_mass += mass_object.GetAmountAvailable();
+            float new_free_mass = mass_object.GetAmountAvailable();
+            if (new_free_mass < 0) {
+                total_mass -= new_free_mass;
+            }
+            free_mass += new_free_mass;
         }
     }
 }

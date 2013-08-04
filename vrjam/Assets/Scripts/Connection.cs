@@ -19,42 +19,42 @@ public class Connection : MonoBehaviour {
         if (IsComplete()) {
             Mass start_node_mass = m_start_node.GetComponent<Mass>();
             Mass end_node_mass = m_end_node.GetComponent<Mass>();
-            float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
-            float mass_difference = Mathf.Abs(start_node_mass.Get() - end_node_mass.Get());
-            if (mass_difference < delta) {
-                delta = mass_difference/2.0f;
-            }
-
-            if (start_node_mass.Get() > end_node_mass.Get()) {
-                end_node_mass.TryToIncreaseBy(delta);
-                start_node_mass.TryToDecreaseBy(delta);
-            } else if (start_node_mass.Get() < end_node_mass.Get()) {
-                end_node_mass.TryToDecreaseBy(delta);
-                start_node_mass.TryToIncreaseBy(delta);
-            }
+            StepUpdateMassBalance(start_node_mass, end_node_mass, RulesManager.g.m_TRANSFER_SPEED);
         } else if (IsStarted()) {
-            // Siphon mass required for endpoint pos
             Mass start_node_mass = m_start_node.GetComponent<Mass>();
-            float required_mass = DetermineMassNeededForConnectionBetween(m_start_node.transform.position, m_end_point);
-            float mass_difference = Mathf.Abs(required_mass - m_mass.Get());
-            if (required_mass > m_mass.Get()) {
-                float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
-                if (mass_difference < delta) {
-                    delta = mass_difference/2.0f;
-                }
+            SiphonFromMassToReachMinimum(start_node_mass, m_mass, RulesManager.g.m_TRANSFER_SPEED);
+        }
+    }
 
-                // Steal Mass from start node (will now die because too much mass needed?)
-                m_mass.TryToIncreaseBy(delta);
-                start_node_mass.TryToDecreaseBy(delta);
-            } else if (required_mass < m_mass.Get()) {
-                float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
-                if (mass_difference < delta) {
-                    delta = mass_difference/2.0f;
-                }
+    // Siphons from a to b or vice versa unless they have equal free mass
+    public void StepUpdateMassBalance (Mass mass_a, Mass mass_b, float transfer_rate) {
+        float free_mass_difference = Mathf.Abs(mass_a.GetAmountAvailable() - mass_b.GetAmountAvailable());
+        float delta = transfer_rate * Time.deltaTime;
+        if (free_mass_difference < delta) {
+            delta = free_mass_difference/2.0f;
+        }
 
-                start_node_mass.TryToIncreaseBy(delta);
-                m_mass.TryToDecreaseBy(delta);
+        if (mass_a.GetAmountAvailable() > mass_b.GetAmountAvailable()) {
+            mass_a.TryToDecreaseBy(delta);
+            mass_b.TryToIncreaseBy(delta);
+        } else if (mass_b.GetAmountAvailable() > mass_a.GetAmountAvailable()) {
+            mass_b.TryToDecreaseBy(delta);
+            mass_a.TryToIncreaseBy(delta);
+        }
+    }
+
+    // Siphons from mass_large to mass_probably_too_small
+    public void SiphonFromMassToReachMinimum (Mass mass_large, Mass mass_probably_too_small, float transfer_rate) {
+        if (mass_probably_too_small.GetAmountAvailable() < 0) {
+            float mass_needed = -mass_probably_too_small.GetAmountAvailable();
+            float free_mass = mass_large.GetAmountAvailable();
+            float delta = transfer_rate * Time.deltaTime;
+            if (mass_needed < delta) {
+                delta = mass_needed;
             }
+            if (mass_large.TryToDecreaseBy(delta)) {
+                mass_probably_too_small.TryToIncreaseBy(delta);
+            } // Otherwise, there is no way to supply the necessary mass
         }
     }
 
@@ -67,6 +67,8 @@ public class Connection : MonoBehaviour {
         m_end_node = end_node;
         m_start_node.AddConnection(this); // TODO (Julian): Should this instead go in InitializeWithStartNode?
         m_end_node.AddConnection(this);
+        float minimum = DetermineMassNeededForConnectionBetween(m_start_node, m_end_node);
+        m_mass.InitializeMinimum(minimum);
         return true; // Change to return false when would be unable to reach
     }
 
@@ -99,11 +101,13 @@ public class Connection : MonoBehaviour {
         float mass_available = m_start_node.GetFreeMass();
         if (mass_required_to_reach <= mass_available) {
             m_end_point = point;
+            m_mass.InitializeMinimum(mass_required_to_reach);
         } else {
             Vector3 direction = (point - m_start_node.transform.position).normalized;
             m_end_point = ProjectMassAlongDirectionFromPoint (source_point: m_start_node.transform.position,
                                                               direction: direction,
                                                               mass: mass_available);
+            m_mass.InitializeMinimum(mass_available);
         }
     }
 
@@ -130,10 +134,5 @@ public class Connection : MonoBehaviour {
 
     private float DetermineMassNeededForConnectionBetween (Vector3 start_position, Vector3 end_position) {
         return (start_position - end_position).magnitude * RulesManager.g.m_MASS_TO_LENGTH_RATIO;
-    }
-
-    private void ComputeMinimumMass () {
-        float minimum = DetermineMassNeededForConnectionBetween(m_start_node, m_end_node);
-        m_mass.InitializeMinimum(minimum);
     }
 }

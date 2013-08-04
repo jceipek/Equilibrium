@@ -48,7 +48,6 @@ public class Mass : MonoBehaviour {
             m_value -= mass;
             return true;
         }
-        throw new ViolatedConservation(); // TODO: Move this out of here
         return false;
     }
 }

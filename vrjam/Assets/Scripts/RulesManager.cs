@@ -7,6 +7,7 @@ public class RulesManager : MonoBehaviour {
     public float m_MASS_TO_SIZE_RATIO = 0.54f; // May replace with proper volume calculation
     public float m_MASS_TO_LENGTH_RATIO = 0.54f;
     public float m_TRANSFER_SPEED = 2.0f;
+    public float m_MINIMUM_NODE_MASS = 2.0f;
 
     void Awake () {
         // Only allow one in a scene

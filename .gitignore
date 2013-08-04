@@ -2,11 +2,6 @@ vrjam/[Ll]ibrary/
 vrjam/[Tt]emp/
 vrjam/[Oo]bj/
 
-# Don't put Oculus SDK in public Git repository
-vrjam/[Aa]ssets/[Oo][Vv][Rr].meta
-vrjam/[Aa]ssets/[Oo][Vv][Rr]/
-
-
 vrjam/[Aa]ssets/Plugins.meta
 vrjam/[Aa]ssets/Plugins/
 

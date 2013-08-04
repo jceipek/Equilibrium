@@ -15,7 +15,7 @@ public class RandomSphereGenerator : MonoBehaviour {
         GameObject node = (GameObject)Instantiate(Resources.Load("Node"));
         node.transform.position = pos;
         Mass mass_component = node.GetComponent<Mass>();
-        mass_component.m_mass = Random.value * 2.0f + 0.5f;
+        mass_component.Initialize(Random.value * 2.0f + 0.5f);
     }
 
     private void Generate () {

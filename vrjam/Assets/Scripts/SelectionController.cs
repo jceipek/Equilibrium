@@ -3,9 +3,10 @@ using System.Collections;
 
 public class SelectionController : MonoBehaviour {
 
-    public Camera m_main_camera; // TODO (Julian): Generalize this to the non-rift camera
-    public Pickable m_selected_object = null;
+    public Camera m_main_camera; // TODO (Julian): Generalize these (Rift doesn't even work)
     public Camera m_standard_camera;
+
+    public Connection m_connection = null;
 
     private float rift_dead_zone_x =  400.0f;
     private float rift_dead_zone_y = 75.0f;
@@ -18,39 +19,40 @@ public class SelectionController : MonoBehaviour {
         bool select_clicked = Input.GetButtonDown("Select");
         bool select_unclicked = Input.GetButtonUp("Select");
         if (select_clicked || select_unclicked) {
-            Pickable pickable_under_mouse = null;
+            Node pickable_under_mouse = null;
             GameObject under_mouse = FindObjectUnderMouse(cast_distance: 100, debug: true);
-            if (under_mouse) pickable_under_mouse = under_mouse.GetComponent<Pickable>();
+            if (under_mouse) pickable_under_mouse = under_mouse.GetComponent<Node>();
 
             if (select_clicked && pickable_under_mouse) {
-                m_selected_object = pickable_under_mouse;
+                GameObject connection = (GameObject)Instantiate(Resources.Load("Connection"));
+                Connection connection_component = connection.GetComponent<Connection>();
+                connection_component.InitializeWithStartNode(pickable_under_mouse);
+                m_connection = connection_component;
             }
 
-            if (select_unclicked && m_selected_object) {
+            if (select_unclicked && m_connection) {
                 if (pickable_under_mouse) {
-                    // TODO (Julian): Connect m_selected_object and pickable_under_mouse properly
-                    // XXX (Julian): This strong coupling is bad. Not sure how to handle this.
-                    m_selected_object.ConnectTo(pickable_under_mouse);
-                    m_selected_object = null;
+                    m_connection.FinishConnectionWithEndNode(pickable_under_mouse);
+                    m_connection = null;
                 } else {
                     // TODO (Julian): Actually release connection properly
-                    m_selected_object = null;
+                    m_connection = null;
                 }
             }
         }
     }
 
     void OnDrawGizmos () {
-        if (IsAnObjectSelected()) {
+        /*if (IsAnObjectSelected()) {
             Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
             Gizmos.DrawLine(m_selected_object.transform.position, ray.origin + ray.direction * 100);
-        }
+        }*/
     }
 
     // Is an object already selected?
-    public bool IsAnObjectSelected () {
+    /*public bool IsAnObjectSelected () {
         return (m_selected_object != null);
-    }
+    }*/
 
     // Return the game object the mouse is hovering over.
     // cast_distance: how far the object can be from the camera

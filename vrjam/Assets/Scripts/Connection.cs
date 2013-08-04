@@ -96,24 +96,20 @@ public class Connection : MonoBehaviour {
         return m_end_node;
     }
 
-    // TODO (Julian): Replace this with a function that tries to
-    // get to the end point (once connections need mass for length)
-    //public void SetEndPoint (Vector3 end_point) {
-    //    m_end_point = end_point;
-    //}
-
-    public void TryToReachPoint (Vector3 point) {
+    public bool TryToReachPoint (Vector3 point) {
         float mass_required_to_reach = DetermineMassNeededForConnectionBetween(m_start_node.transform.position, point);
         float mass_available = m_mass.Get() + m_start_node.GetFreeMass();
         if (mass_required_to_reach <= mass_available) {
             m_end_point = point;
             m_mass.InitializeMinimum(mass_required_to_reach);
+            return true;
         } else {
             Vector3 direction = (point - m_start_node.transform.position).normalized;
             m_end_point = ProjectMassAlongDirectionFromPoint (source_point: m_start_node.transform.position,
                                                               direction: direction,
                                                               mass: mass_available);
             m_mass.InitializeMinimum(mass_available);
+            return false;
         }
     }
 

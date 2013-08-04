@@ -16,11 +16,7 @@ public class SelectionController : MonoBehaviour {
     }
 
     void Update () {
-        float mouse_projection_distance = 20.0f;
-
-        if (m_connection) {
-            mouse_projection_distance = (m_standard_camera.transform.position - m_connection.GetStartNode().transform.position).magnitude;
-        }
+        float mouse_projection_distance = 100.0f;
 
         bool select_clicked = Input.GetButtonDown("Select");
         bool select_unclicked = Input.GetButtonUp("Select");
@@ -30,44 +26,55 @@ public class SelectionController : MonoBehaviour {
             if (under_mouse) pickable_under_mouse = under_mouse.GetComponent<Node>();
 
             if (select_clicked && pickable_under_mouse) {
-                GameObject connection = (GameObject)Instantiate(Resources.Load("Connection"));
-                Connection connection_component = connection.GetComponent<Connection>();
-                connection_component.InitializeWithStartNode(pickable_under_mouse);
-                m_connection = connection_component;
+                SelectNode(pickable_under_mouse);
             }
 
             if (select_unclicked && m_connection) {
                 if (pickable_under_mouse) {
-                    bool success = m_connection.TryToFinishConnectionWithEndNode(pickable_under_mouse);
-                    if (!success) m_connection.DestroyConnection(); // TODO (Julian): Maybe move this into TryToFinishConnectionWithEndNode?
-                    m_connection = null;
+                    TryToConnectTo(pickable_under_mouse);
                 } else {
-                    // TODO (Julian): Actually release connection properly
-                    m_connection.DestroyConnection();
-                    m_connection = null;
+                    AbortConnection();
                 }
             }
         } else if (m_connection) {
+            float distance_in_plane = (m_standard_camera.transform.position - m_connection.GetStartNode().transform.position).magnitude;
             Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
-            Vector3 mouse_pos = ray.origin + ray.direction * mouse_projection_distance;
-            GameObject under_mouse = FindObjectUnderMouse(100.0f);
+            Vector3 mouse_pos = ray.origin + ray.direction * distance_in_plane;
+            GameObject under_mouse = FindObjectUnderMouse(mouse_projection_distance);
             if (under_mouse) {
                 // Snap to object
                 mouse_pos = under_mouse.transform.position;
             }
-            m_connection.TryToReachPoint(mouse_pos);
+            TryToDragConnectionTo(mouse_pos);
         }
     }
 
-    /*if (IsAnObjectSelected()) {
-        Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
-        Gizmos.DrawLine(m_selected_object.transform.position, ray.origin + ray.direction * 100);
-    }*/
+    public bool IsANodeSelected () {
+        return (m_connection != null);
+    }
 
-    // Is an object already selected?
-    /*public bool IsAnObjectSelected () {
-        return (m_selected_object != null);
-    }*/
+    public void SelectNode (Node node) {
+        GameObject connection = (GameObject)Instantiate(Resources.Load("Connection"));
+        Connection connection_component = connection.GetComponent<Connection>();
+        connection_component.InitializeWithStartNode(node);
+        m_connection = connection_component;
+    }
+
+    public bool TryToConnectTo (Node node) {
+        bool success = m_connection.TryToFinishConnectionWithEndNode(node);
+        if (!success) m_connection.DestroyConnection(); // TODO (Julian): Maybe move this into TryToFinishConnectionWithEndNode?
+        m_connection = null;
+        return success;
+    }
+
+    public bool TryToDragConnectionTo (Vector3 position) {
+        return m_connection.TryToReachPoint(position);
+    }
+
+    public void AbortConnection () {
+        m_connection.DestroyConnection();
+        m_connection = null;
+    }
 
     // Return the game object the mouse is hovering over.
     // cast_distance: how far the object can be from the camera

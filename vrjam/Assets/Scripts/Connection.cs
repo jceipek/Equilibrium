@@ -19,8 +19,9 @@ public class Connection : MonoBehaviour {
             Mass start_node_mass = m_start_node.GetComponent<Mass>();
             Mass end_node_mass = m_end_node.GetComponent<Mass>();
             float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
-            if (Mathf.Abs(start_node_mass.Get() - end_node_mass.Get()) < delta) {
-                delta = Mathf.Abs(start_node_mass.Get() - end_node_mass.Get())/2.0f;
+            float mass_difference = Mathf.Abs(start_node_mass.Get() - end_node_mass.Get());
+            if (mass_difference < delta) {
+                delta = mass_difference/2.0f;
             }
 
             if (start_node_mass.Get() > end_node_mass.Get()) {
@@ -59,6 +60,12 @@ public class Connection : MonoBehaviour {
         return m_end_node;
     }
 
+    // TODO (Julian): Replace this with a function that tries to
+    // get to the end point (once connections need mass for length)
+    public void SetEndPoint (Vector3 end_point) {
+        m_end_point = end_point;
+    }
+
     public Vector3 GetEndPoint () {
         return m_end_point;
     }
@@ -71,9 +78,17 @@ public class Connection : MonoBehaviour {
         return (IsStarted() && m_end_node != null);
     }
 
+    private float DetermineMassNeededForConnectionBetween (Node start_node, Node end_node) {
+        return DetermineMassNeededForConnectionBetween(start_node.transform.position,
+                                                     end_node.transform.position);
+    }
+
+    private float DetermineMassNeededForConnectionBetween (Vector3 start_position, Vector3 end_position) {
+        return (start_position - end_position).magnitude * RulesManager.g.m_MASS_TO_LENGTH_RATIO;
+    }
+
     private void ComputeMinimumMass () {
-        float minimum = (m_start_node.transform.position - m_end_node.transform.position).magnitude;
-        minimum *= RulesManager.g.m_MASS_TO_LENGTH_RATIO;
+        float minimum = DetermineMassNeededForConnectionBetween(m_start_node, m_end_node);
         m_mass.InitializeMinimum(minimum);
     }
 }

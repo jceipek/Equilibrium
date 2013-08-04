@@ -16,11 +16,13 @@ public class SelectionController : MonoBehaviour {
     }
 
     void Update () {
+        float mouse_projection_distance = 100.0f;
+
         bool select_clicked = Input.GetButtonDown("Select");
         bool select_unclicked = Input.GetButtonUp("Select");
         if (select_clicked || select_unclicked) {
             Node pickable_under_mouse = null;
-            GameObject under_mouse = FindObjectUnderMouse(cast_distance: 100, debug: true);
+            GameObject under_mouse = FindObjectUnderMouse(cast_distance: mouse_projection_distance, debug: true);
             if (under_mouse) pickable_under_mouse = under_mouse.GetComponent<Node>();
 
             if (select_clicked && pickable_under_mouse) {
@@ -41,15 +43,17 @@ public class SelectionController : MonoBehaviour {
                     m_connection = null;
                 }
             }
+        } else if (m_connection) {
+            Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
+            Vector3 mouse_pos = ray.origin + ray.direction * mouse_projection_distance;
+            m_connection.SetEndPoint(mouse_pos);
         }
     }
 
-    void OnDrawGizmos () {
-        /*if (IsAnObjectSelected()) {
-            Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
-            Gizmos.DrawLine(m_selected_object.transform.position, ray.origin + ray.direction * 100);
-        }*/
-    }
+    /*if (IsAnObjectSelected()) {
+        Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
+        Gizmos.DrawLine(m_selected_object.transform.position, ray.origin + ray.direction * 100);
+    }*/
 
     // Is an object already selected?
     /*public bool IsAnObjectSelected () {

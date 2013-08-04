@@ -32,7 +32,8 @@ public class SelectionController : MonoBehaviour {
 
             if (select_unclicked && m_connection) {
                 if (pickable_under_mouse) {
-                    m_connection.FinishConnectionWithEndNode(pickable_under_mouse);
+                    bool success = m_connection.TryToFinishConnectionWithEndNode(pickable_under_mouse);
+                    if (!success) m_connection.DestroyConnection(); // TODO (Julian): Maybe move this into TryToFinishConnectionWithEndNode?
                     m_connection = null;
                 } else {
                     // TODO (Julian): Actually release connection properly

@@ -7,8 +7,10 @@ public class RandomSphereGenerator : MonoBehaviour {
     public int m_node_count;
     public float m_node_min_mass;
     public float m_node_max_mass;
-    public float m_sphere_radius;
     public float m_connection_count;
+
+    public float m_sphere_radius;
+    public bool m_allow_nodes_inside_sphere;
 
     private List<Node> m_node_list = new List<Node>();
 
@@ -32,8 +34,13 @@ public class RandomSphereGenerator : MonoBehaviour {
 
     private void GenerateNodes () {
         for (int index = 0; index < m_node_count; index++) {
-            Vector3 random_vector = Random.onUnitSphere * m_sphere_radius;
-            //Vector3 random_vector = Random.insideUnitSphere * m_sphere_radius;
+            Vector3 random_vector;
+            if (m_allow_nodes_inside_sphere) {
+                random_vector = Random.insideUnitSphere * m_sphere_radius;
+            } else {
+                random_vector = Random.onUnitSphere * m_sphere_radius;
+            }
+
             Node node = GenerateNodeAt(random_vector);
             m_node_list.Add(node);
         }

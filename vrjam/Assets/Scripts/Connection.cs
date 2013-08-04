@@ -33,19 +33,6 @@ public class Connection : MonoBehaviour {
         }
     }
 
-    void OnDrawGizmos () {
-        if (m_start_node) {
-            if (m_end_node) {
-                Gizmos.DrawLine(m_start_node.gameObject.transform.position,
-                                m_end_node.gameObject.transform.position);
-            } else {
-                Gizmos.DrawLine(m_start_node.gameObject.transform.position,
-                                m_end_point);
-            }
-        }
-
-    }
-
     public void InitializeWithStartNode (Node start_node) {
         m_start_node = start_node;
         m_end_point = start_node.gameObject.transform.position;
@@ -64,12 +51,16 @@ public class Connection : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public bool GetStartNode () {
+    public Node GetStartNode () {
         return m_start_node;
     }
 
-    public bool GetEndNode () {
+    public Node GetEndNode () {
         return m_end_node;
+    }
+
+    public Vector3 GetEndPoint () {
+        return m_end_point;
     }
 
     public bool IsStarted () {

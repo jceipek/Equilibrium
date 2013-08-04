@@ -1,5 +1,18 @@
 define(['debug', 'constants'], function (Debug, Constants) {
 
+    var makeDerivative = function (d_pos, d_velocity, d_quantity) {
+      var deriv = {
+        d_pos: d_pos
+      , d_velocity: d_velocity
+      };
+
+      if (d_quantity) {
+        deriv.d_quantity = d_quantity;
+      }
+
+      return deriv;
+    }
+
     var Node = {
       makeNode: function(x, y, quantity) {
         // return {
@@ -10,10 +23,12 @@ define(['debug', 'constants'], function (Debug, Constants) {
         return {
           previous_state: {
             pos: {x: x, y: y}
+          , velocity: {x: x, y: y}
           , quantity: quantity
           }
         , current_state: {
             pos: {x: x, y: y}
+          , velocity: {x: x, y: y}
           , quantity: quantity
           }
         , connections: []

@@ -111,6 +111,7 @@ define(['zepto', 'constants', 'debug', 'node', 'connection', 'helpers', 'handler
           _g.nodes.forEach(function (node) {
             total += Node.getRealQuantityFor(node);
             Debug.log("\t" + Node.getRealQuantityFor(node));
+            Debug.log("\t" + Node.getRealQuantityFor(node));
           });
           return total;
         }

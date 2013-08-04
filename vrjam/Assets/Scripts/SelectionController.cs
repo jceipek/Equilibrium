@@ -3,7 +3,12 @@ using System.Collections;
 
 public class SelectionController : MonoBehaviour {
 
+    public Camera m_main_camera; // TODO (Julian): Generalize this to the non-rift camera
     public Pickable m_selected_object = null;
+    public Camera m_standard_camera;
+
+    private float rift_dead_zone_x =  400.0f;
+    private float rift_dead_zone_y = 75.0f;
 
     void Start () {
 
@@ -37,7 +42,7 @@ public class SelectionController : MonoBehaviour {
 
     void OnDrawGizmos () {
         if (IsAnObjectSelected()) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
             Gizmos.DrawLine(m_selected_object.transform.position, ray.origin + ray.direction * 100);
         }
     }
@@ -53,7 +58,7 @@ public class SelectionController : MonoBehaviour {
     private GameObject FindObjectUnderMouse (float cast_distance, bool debug = false) {
         // TODO (Julian): Once we switch to the rift, we probably can't use the main camera.
         // We may even need to use a manual raycast that doesn't involve ScreenPointToRay
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         GameObject hit_object = null;
         if (debug) Debug.DrawRay(ray.origin, ray.direction * cast_distance, Color.yellow, 0.1f);
@@ -62,4 +67,27 @@ public class SelectionController : MonoBehaviour {
         }
         return hit_object;
     }
+
+    // Uses the Rift, needs to be merged with other method at some point soon?
+    /*private GameObject NewFindObjectUnderMouse (float cast_distance) {
+        float x = Input.mousePosition.x  ScreenWidth - DeadZoneX + 0.001f;
+        float y = Input.mousePosition.y;
+        Screen.width;
+        Screen.height;
+
+        Vector3 start_position = m_main_camera.transform.position;
+        Vector3 dir = Vector3.forward;
+        dir = m_main_camera.transform.rotation * dir;
+        dir *= cast_distance;
+        Vector3 end_position = start_position + dir;
+
+        RaycastHit hit;
+        GameObject hit_object = null;
+        if (Physics.Linecast(start_position, end_position, out hit))
+        {
+            hit_object = hit.collider.gameObject;
+        }
+
+        return hit_object;
+    }*/
 }

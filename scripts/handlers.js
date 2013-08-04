@@ -45,7 +45,7 @@ define(['helpers', 'constants', 'debug', 'node', 'connection'], function (Helper
               && !Node.sharesConnectionWith(selected_node, node)) {
               Debug.log("RELEASE PROPER");
               var conn = Connection.makeConnection(selected_node, node);
-              Node.increaseQuantityBy(node, _g.context.quantity - conn.quantity);
+              Node.increaseQuantityBy(node, _g.context.quantity - Connection.getQuantityFor(conn));
               _g.connections.push(conn);
               is_proper_release = true;
               return true;

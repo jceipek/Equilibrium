@@ -129,7 +129,7 @@ public class Connection : MonoBehaviour {
     }
 
     private Vector3 ProjectMassAlongDirectionFromPoint (Vector3 source_point, Vector3 direction, float mass) {
-        float length = RulesManager.g.m_MASS_TO_LENGTH_RATIO * mass;
+        float length = mass / RulesManager.g.m_MASS_TO_LENGTH_RATIO;
         return direction * length + source_point;
     }
 

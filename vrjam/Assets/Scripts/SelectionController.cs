@@ -50,10 +50,9 @@ public class SelectionController : MonoBehaviour {
         } else if (m_connection) {
             Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
             Vector3 mouse_pos = ray.origin + ray.direction * mouse_projection_distance;
-            GameObject under_mouse = FindObjectUnderMouse(mouse_projection_distance);
+            GameObject under_mouse = FindObjectUnderMouse(100.0f);
             if (under_mouse) {
                 // Snap to object
-                Debug.Log("SNAP");
                 mouse_pos = under_mouse.transform.position;
             }
             m_connection.TryToReachPoint(mouse_pos);

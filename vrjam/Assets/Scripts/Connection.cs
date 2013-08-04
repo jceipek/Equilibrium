@@ -65,13 +65,15 @@ public class Connection : MonoBehaviour {
 
     public bool TryToFinishConnectionWithEndNode (Node end_node) {
         // TODO (Julian): Make connections impossible if a connection already exists
+        if (m_start_node == end_node) {
+            return false;
+        }
         m_end_node = end_node;
         m_start_node.AddConnection(this); // TODO (Julian): Should this instead go in InitializeWithStartNode?
         m_end_node.AddConnection(this);
         float minimum = DetermineMassNeededForConnectionBetween(m_start_node, m_end_node);
         m_mass.InitializeMinimum(minimum);
         if (m_mass.GetAmountAvailable() < 0.0f) {
-            Debug.Log("MISSING: " + m_mass.GetAmountAvailable());
             return false;
         }
         return true; // Change to return false when would be unable to reach

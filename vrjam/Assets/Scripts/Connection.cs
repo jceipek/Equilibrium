@@ -18,7 +18,8 @@ public class Connection : MonoBehaviour {
         if (IsComplete()) {
             Mass start_node_mass = m_start_node.GetComponent<Mass>();
             Mass end_node_mass = m_end_node.GetComponent<Mass>();
-            StepUpdateMassBalance(start_node_mass, end_node_mass, RulesManager.g.m_TRANSFER_SPEED);
+            float transfer_rate = RulesManager.g.m_DISTANCE_TO_SPEED_RATIO * GetLength();
+            StepUpdateMassBalance(start_node_mass, end_node_mass, transfer_rate);
         } else if (IsStarted()) {
             Mass start_node_mass = m_start_node.GetComponent<Mass>();
             SiphonFromMassToReachMinimum(start_node_mass, m_mass, RulesManager.g.m_TRANSFER_SPEED);
@@ -63,6 +64,7 @@ public class Connection : MonoBehaviour {
     }
 
     public bool TryToFinishConnectionWithEndNode (Node end_node) {
+        // TODO (Julian): Make connections impossible if a connection already exists
         m_end_node = end_node;
         m_start_node.AddConnection(this); // TODO (Julian): Should this instead go in InitializeWithStartNode?
         m_end_node.AddConnection(this);
@@ -133,5 +135,15 @@ public class Connection : MonoBehaviour {
 
     private float DetermineMassNeededForConnectionBetween (Vector3 start_position, Vector3 end_position) {
         return (start_position - end_position).magnitude * RulesManager.g.m_MASS_TO_LENGTH_RATIO;
+    }
+
+    private float GetLength () {
+        if (IsComplete()) {
+            return (m_start_node.transform.position - m_end_node.transform.position).magnitude;
+        } else if (IsStarted()) {
+            return (m_start_node.transform.position - m_end_point).magnitude;
+        } else {
+            return 0.0f;
+        }
     }
 }

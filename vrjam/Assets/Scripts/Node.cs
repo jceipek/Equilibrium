@@ -18,18 +18,18 @@ public class Node : MonoBehaviour {
     public void GainMass (float mass) {
         Mass mass_component = gameObject.GetComponent<Mass>();
         if (mass_component) {
-            mass_component.IncreaseBy(mass);
+            mass_component.TryToIncreaseBy(mass);
         } else {
-            Debug.Log("Can't lose mass!");
+            Debug.Log("Has no mass component!");
         }
     }
 
     public void LoseMass (float mass) {
         Mass mass_component = gameObject.GetComponent<Mass>();
         if (mass_component) {
-            mass_component.DecreaseBy(mass);
+            mass_component.TryToDecreaseBy(mass);
         } else {
-            Debug.Log("Can't lose mass!");
+            Debug.Log("Has no mass component!");
         }
     }
 

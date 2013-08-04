@@ -4,7 +4,6 @@ using System.Collections;
 [RequireComponent (typeof (Mass))]
 public class Connection : MonoBehaviour {
 
-    // Note: Will be made private
     private Node m_start_node = null;
     private Node m_end_node = null;
     private Vector3 m_end_point; // If the connection is incomplete

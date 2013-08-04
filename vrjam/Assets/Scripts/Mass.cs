@@ -2,14 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public class Mass : MonoBehaviour {
+	public float m_mass;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

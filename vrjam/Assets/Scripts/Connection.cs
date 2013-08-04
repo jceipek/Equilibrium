@@ -14,7 +14,6 @@ public class Connection : MonoBehaviour {
     }
 
     void Update () {
-        // TODO (JULIAN): Seriously Refactor this
         // TODO XXX (Julian): This is currently skipping mass in the connection itself
         if (IsComplete()) {
             Mass start_node_mass = m_start_node.GetComponent<Mass>();

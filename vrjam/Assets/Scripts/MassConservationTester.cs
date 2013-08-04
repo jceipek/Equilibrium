@@ -1,0 +1,52 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class MassConservationTester : MonoBehaviour {
+
+    public bool m_update_snapshot_now;
+    public float m_mass_snapshot;
+    public float m_free_mass_snapshot;
+
+    public float m_current_free_mass;
+    public float m_current_mass;
+    public bool m_update_now;
+    public bool m_update_cycle;
+    public float m_update_cycle_rate_seconds;
+
+    void Update () {
+        if (m_update_snapshot_now) {
+            TakeSnapshot ();
+            m_update_snapshot_now = false;
+        }
+        if (m_update_now) {
+            UpdateCurrentValues ();
+            m_update_now = false;
+        }
+        if (m_update_cycle) {
+            StartCoroutine(WaitAndUpdate(m_update_cycle_rate_seconds));
+        }
+    }
+
+    IEnumerator WaitAndUpdate (float seconds) {
+        yield return new WaitForSeconds(seconds);
+        UpdateCurrentValues();
+    }
+
+    public void TakeSnapshot () {
+        UpdateValues(ref m_free_mass_snapshot, ref m_mass_snapshot);
+    }
+
+    public void UpdateCurrentValues () {
+        UpdateValues(ref m_current_free_mass, ref m_current_mass);
+    }
+
+    private void UpdateValues (ref float free_mass, ref float total_mass) {
+        Mass[] mass_objects = FindObjectsOfType(typeof(Mass)) as Mass[];
+        total_mass = 0.0f;
+        free_mass = 0.0f;
+        foreach (Mass mass_object in mass_objects) {
+            total_mass += mass_object.Get();
+            free_mass += mass_object.GetAmountAvailable();
+        }
+    }
+}

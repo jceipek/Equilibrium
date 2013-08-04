@@ -36,7 +36,7 @@ public class Connection : MonoBehaviour {
             // Siphon mass required for endpoint pos
             Mass start_node_mass = m_start_node.GetComponent<Mass>();
             float required_mass = DetermineMassNeededForConnectionBetween(m_start_node.transform.position, m_end_point);
-            float mass_difference = Mathf.Abs(start_node_mass.Get() - m_mass.Get());
+            float mass_difference = Mathf.Abs(required_mass - m_mass.Get());
             if (required_mass > m_mass.Get()) {
                 float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
                 if (mass_difference < delta) {

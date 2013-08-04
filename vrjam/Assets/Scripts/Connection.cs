@@ -70,6 +70,10 @@ public class Connection : MonoBehaviour {
         m_end_node.AddConnection(this);
         float minimum = DetermineMassNeededForConnectionBetween(m_start_node, m_end_node);
         m_mass.InitializeMinimum(minimum);
+        if (m_mass.GetAmountAvailable() < 0.0f) {
+            Debug.Log("MISSING: " + m_mass.GetAmountAvailable());
+            return false;
+        }
         return true; // Change to return false when would be unable to reach
     }
 
@@ -98,8 +102,8 @@ public class Connection : MonoBehaviour {
     //}
 
     public void TryToReachPoint (Vector3 point) {
-        float mass_required_to_reach = DetermineMassNeededForConnectionBetween(m_start_node.transform.position, m_end_point);
-        float mass_available = m_start_node.GetFreeMass();
+        float mass_required_to_reach = DetermineMassNeededForConnectionBetween(m_start_node.transform.position, point);
+        float mass_available = m_mass.Get() + m_start_node.GetFreeMass();
         if (mass_required_to_reach <= mass_available) {
             m_end_point = point;
             m_mass.InitializeMinimum(mass_required_to_reach);
@@ -125,7 +129,7 @@ public class Connection : MonoBehaviour {
     }
 
     private Vector3 ProjectMassAlongDirectionFromPoint (Vector3 source_point, Vector3 direction, float mass) {
-        return direction * RulesManager.g.m_MASS_TO_LENGTH_RATIO + source_point;
+        return direction * RulesManager.g.m_MASS_TO_LENGTH_RATIO * mass + source_point;
     }
 
     private float DetermineMassNeededForConnectionBetween (Node start_node, Node end_node) {

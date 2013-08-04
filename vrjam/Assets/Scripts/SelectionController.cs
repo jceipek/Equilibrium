@@ -16,7 +16,7 @@ public class SelectionController : MonoBehaviour {
     }
 
     void Update () {
-        float mouse_projection_distance = 100.0f;
+        float mouse_projection_distance = 20.0f;
 
         bool select_clicked = Input.GetButtonDown("Select");
         bool select_unclicked = Input.GetButtonUp("Select");
@@ -46,6 +46,10 @@ public class SelectionController : MonoBehaviour {
         } else if (m_connection) {
             Ray ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
             Vector3 mouse_pos = ray.origin + ray.direction * mouse_projection_distance;
+            GameObject under_mouse = FindObjectUnderMouse(mouse_projection_distance);
+            if (under_mouse) {
+                mouse_pos = under_mouse.transform.position;
+            }
             m_connection.TryToReachPoint(mouse_pos);
         }
     }

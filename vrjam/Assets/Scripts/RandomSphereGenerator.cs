@@ -41,6 +41,8 @@ public class RandomSphereGenerator : MonoBehaviour {
                 random_vector = Random.onUnitSphere * m_sphere_radius;
             }
 
+            random_vector.y = 0;
+
             Node node = GenerateNodeAt(random_vector);
             m_node_list.Add(node);
         }

@@ -65,7 +65,7 @@ public class Connection : MonoBehaviour {
 
     public bool TryToFinishConnectionWithEndNode (Node end_node) {
         // TODO (Julian): Make connections impossible if a connection already exists
-        if (m_start_node == end_node) {
+        if (m_start_node == end_node || m_start_node.DoesShareConnectionWith(end_node)) {
             return false;
         }
         m_end_node = end_node;

@@ -5,8 +5,12 @@ using System.Collections.Generic;
 public class RandomSphereGenerator : MonoBehaviour {
 
     public int m_node_count;
+    public float m_node_min_mass;
+    public float m_node_max_mass;
     public float m_sphere_radius;
     public float m_connection_count;
+
+    private List<Node> m_node_list = new List<Node>();
 
     // Use this for initialization
     void Start () {
@@ -17,30 +21,33 @@ public class RandomSphereGenerator : MonoBehaviour {
         GameObject node = (GameObject)Instantiate(Resources.Load("Node"));
         node.transform.position = pos;
         Mass mass_component = node.GetComponent<Mass>();
-        mass_component.Initialize(Random.value * 2.0f + 0.5f);
+        mass_component.Initialize(Random.value * (m_node_max_mass - m_node_min_mass) + m_node_min_mass);
         return node.GetComponent<Node>();
     }
 
     private void Generate () {
-        List<Node> node_list = new List<Node>();
-        for (int index = 0; index < m_node_count; index++) {
-            //Vector3 random_vector = Random.onUnitSphere * m_sphere_radius;
-            Vector3 random_vector = Random.insideUnitSphere * m_sphere_radius;
-            Node node = GenerateNodeAt(random_vector);
-            node_list.Add(node);
-        }
+        GenerateNodes();
+        GenerateConnections();
+    }
 
-        int max_connection_count = m_node_count*(m_node_count - 1) / 2;
-        if (m_connection_count > max_connection_count) {
-            m_connection_count = max_connection_count; // So we don't have an infinite loop!
+    private void GenerateNodes () {
+        for (int index = 0; index < m_node_count; index++) {
+            Vector3 random_vector = Random.onUnitSphere * m_sphere_radius;
+            //Vector3 random_vector = Random.insideUnitSphere * m_sphere_radius;
+            Node node = GenerateNodeAt(random_vector);
+            m_node_list.Add(node);
         }
+    }
+
+    private void GenerateConnections () {
+        EnsureConnectionCountIsPossible();
         bool success = false;
         for (int index = 0; index < m_connection_count; index++) {
             do {
                 int first = index % m_node_count;
-                int second = Random.Range(0, node_list.Count);
-                Node first_node = node_list[first];
-                Node second_node = node_list[second];
+                int second = Random.Range(0, m_node_list.Count);
+                Node first_node = m_node_list[first];
+                Node second_node = m_node_list[second];
                 success = (first != second && !first_node.DoesShareConnectionWith(second_node));
                 if (success) {
                     GameObject connection_object = (GameObject)Instantiate(Resources.Load("Connection"));
@@ -49,6 +56,13 @@ public class RandomSphereGenerator : MonoBehaviour {
                     connection.TryToFinishConnectionWithEndNode(second_node); // TODO: Change once this doesn't work anymore by giving the connection extra internal mass
                 }
             } while (!success);
+        }
+    }
+
+    private void EnsureConnectionCountIsPossible () {
+        int max_connection_count = m_node_count*(m_node_count - 1) / 2;
+        if (m_connection_count > max_connection_count) {
+            m_connection_count = max_connection_count; // So we don't have an infinite loop!
         }
     }
 }

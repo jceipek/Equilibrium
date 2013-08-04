@@ -20,8 +20,9 @@ public class Connection : MonoBehaviour {
     }
 
     public void DestroyConnection () {
-        m_start_node.RemoveConnection(this);
-        m_end_node.RemoveConnection(this);
+        if (m_start_node) m_start_node.RemoveConnection(this);
+        if (m_end_node) m_end_node.RemoveConnection(this);
+        Destroy(gameObject);
     }
 
     public bool GetStartNode () {
@@ -42,7 +43,7 @@ public class Connection : MonoBehaviour {
             Mass end_node_mass = m_end_node.GetComponent<Mass>();
             float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
             if (Mathf.Abs(start_node_mass.Get() - end_node_mass.Get()) < delta) {
-                delta = Mathf.Abs(start_node_mass.Get() - end_node_mass.Get());
+                delta = Mathf.Abs(start_node_mass.Get() - end_node_mass.Get())/2.0f;
             }
 
             if (start_node_mass.Get() > end_node_mass.Get()) {

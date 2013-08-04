@@ -36,6 +36,7 @@ public class SelectionController : MonoBehaviour {
                     m_connection = null;
                 } else {
                     // TODO (Julian): Actually release connection properly
+                    m_connection.DestroyConnection();
                     m_connection = null;
                 }
             }

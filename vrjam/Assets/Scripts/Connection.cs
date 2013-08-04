@@ -129,7 +129,8 @@ public class Connection : MonoBehaviour {
     }
 
     private Vector3 ProjectMassAlongDirectionFromPoint (Vector3 source_point, Vector3 direction, float mass) {
-        return direction * RulesManager.g.m_MASS_TO_LENGTH_RATIO * mass + source_point;
+        float length = RulesManager.g.m_MASS_TO_LENGTH_RATIO * mass;
+        return direction * length + source_point;
     }
 
     private float DetermineMassNeededForConnectionBetween (Node start_node, Node end_node) {

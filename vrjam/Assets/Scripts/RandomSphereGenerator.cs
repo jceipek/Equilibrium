@@ -7,7 +7,7 @@ public class RandomSphereGenerator : MonoBehaviour {
     public int m_node_count;
     public float m_node_min_mass;
     public float m_node_max_mass;
-    public float m_connection_count;
+    public int m_connection_count;
 
     public float m_sphere_radius;
     public bool m_allow_nodes_inside_sphere;

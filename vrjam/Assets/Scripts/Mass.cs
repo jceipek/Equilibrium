@@ -34,6 +34,10 @@ public class Mass : MonoBehaviour {
         return m_value;
     }
 
+    public float GetAmountAvailable () {
+        return m_value - m_minimum_value;
+    }
+
     public bool TryToIncreaseBy (float mass) {
         m_value += mass;
         return true;

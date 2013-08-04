@@ -42,6 +42,10 @@ public class Node : MonoBehaviour {
         return false;
     }
 
+    public float GetFreeMass () {
+        return m_mass.GetAmountAvailable();
+    }
+
     public void GainMass (float mass) {
         m_mass.TryToIncreaseBy(mass);
     }

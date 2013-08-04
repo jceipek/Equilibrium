@@ -44,13 +44,8 @@ public class Connection : MonoBehaviour {
                 }
 
                 // Steal Mass from start node (will now die because too much mass needed?)
-                if (start_node_mass.Get() > m_mass.Get()) {
-                    m_mass.TryToIncreaseBy(delta);
-                    start_node_mass.TryToDecreaseBy(delta);
-                } else if (start_node_mass.Get() < m_mass.Get()) {
-                    m_mass.TryToDecreaseBy(delta);
-                    start_node_mass.TryToIncreaseBy(delta);
-                }
+                m_mass.TryToIncreaseBy(delta);
+                start_node_mass.TryToDecreaseBy(delta);
             } else if (required_mass < m_mass.Get()) {
                 float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
                 if (mass_difference < delta) {
@@ -91,8 +86,21 @@ public class Connection : MonoBehaviour {
 
     // TODO (Julian): Replace this with a function that tries to
     // get to the end point (once connections need mass for length)
-    public void SetEndPoint (Vector3 end_point) {
-        m_end_point = end_point;
+    //public void SetEndPoint (Vector3 end_point) {
+    //    m_end_point = end_point;
+    //}
+
+    public void TryToReachPoint (Vector3 point) {
+        float mass_required_to_reach = DetermineMassNeededForConnectionBetween(m_start_node.transform.position, m_end_point);
+        float mass_available = m_start_node.GetFreeMass();
+        if (mass_required_to_reach <= mass_available) {
+            m_end_point = point;
+        } else {
+            Vector3 direction = (point - m_start_node.transform.position).normalized;
+            m_end_point = ProjectMassAlongDirectionFromPoint (source_point: m_start_node.transform.position,
+                                                              direction: direction,
+                                                              mass: mass_available);
+        }
     }
 
     public Vector3 GetEndPoint () {
@@ -105,6 +113,10 @@ public class Connection : MonoBehaviour {
 
     public bool IsComplete () {
         return (IsStarted() && m_end_node != null);
+    }
+
+    private Vector3 ProjectMassAlongDirectionFromPoint (Vector3 source_point, Vector3 direction, float mass) {
+        return direction * RulesManager.g.m_MASS_TO_LENGTH_RATIO + source_point;
     }
 
     private float DetermineMassNeededForConnectionBetween (Node start_node, Node end_node) {

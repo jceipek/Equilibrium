@@ -14,6 +14,7 @@ public class Connection : MonoBehaviour {
     }
 
     void Update () {
+        // TODO (JULIAN): Seriously Refactor this
         // TODO XXX (Julian): This is currently skipping mass in the connection itself
         if (IsComplete()) {
             Mass start_node_mass = m_start_node.GetComponent<Mass>();
@@ -30,6 +31,34 @@ public class Connection : MonoBehaviour {
             } else if (start_node_mass.Get() < end_node_mass.Get()) {
                 end_node_mass.TryToDecreaseBy(delta);
                 start_node_mass.TryToIncreaseBy(delta);
+            }
+        } else if (IsStarted()) {
+            // Siphon mass required for endpoint pos
+            Mass start_node_mass = m_start_node.GetComponent<Mass>();
+            float required_mass = DetermineMassNeededForConnectionBetween(m_start_node.transform.position, m_end_point);
+            float mass_difference = Mathf.Abs(start_node_mass.Get() - m_mass.Get());
+            if (required_mass > m_mass.Get()) {
+                float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
+                if (mass_difference < delta) {
+                    delta = mass_difference/2.0f;
+                }
+
+                // Steal Mass from start node (will now die because too much mass needed?)
+                if (start_node_mass.Get() > m_mass.Get()) {
+                    m_mass.TryToIncreaseBy(delta);
+                    start_node_mass.TryToDecreaseBy(delta);
+                } else if (start_node_mass.Get() < m_mass.Get()) {
+                    m_mass.TryToDecreaseBy(delta);
+                    start_node_mass.TryToIncreaseBy(delta);
+                }
+            } else if (required_mass < m_mass.Get()) {
+                float delta = RulesManager.g.m_TRANSFER_SPEED * Time.deltaTime;
+                if (mass_difference < delta) {
+                    delta = mass_difference/2.0f;
+                }
+
+                start_node_mass.TryToIncreaseBy(delta);
+                m_mass.TryToDecreaseBy(delta);
             }
         }
     }

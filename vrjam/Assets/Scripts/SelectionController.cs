@@ -16,7 +16,7 @@ public class SelectionController : MonoBehaviour {
     }
 
     void Update () {
-        float mouse_projection_distance = 100.0f;
+        float mouse_projection_distance = 30.0f;
 
         bool select_clicked = Input.GetButtonDown("Select");
         bool select_unclicked = Input.GetButtonUp("Select");

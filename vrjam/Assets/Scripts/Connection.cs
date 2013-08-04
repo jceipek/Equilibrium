@@ -71,7 +71,11 @@ public class Connection : MonoBehaviour {
     }
 
     public void DestroyConnection () {
-        if (m_start_node) m_start_node.RemoveConnection(this);
+        if (m_start_node) {
+            m_start_node.GainMass(m_mass.Get());
+            m_mass.TryToDecreaseBy(m_mass.Get());
+            m_start_node.RemoveConnection(this);
+        }
         if (m_end_node) m_end_node.RemoveConnection(this);
         Destroy(gameObject);
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CursorController {
+public class SelectionCursor {
 
     public float m_speed;
 

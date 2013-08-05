@@ -28,7 +28,7 @@ public class ThreeDimGUI : MonoBehaviour {
 
     // Crosshair system, rendered onto 3D plane
     public Texture  m_crosshair_image          = null;
-    private CursorController m_crosshair          = new CursorController();
+    private SelectionCursor m_crosshair          = new SelectionCursor();
 
     // Create a delegate for update functions
     private delegate void updateFunctions();

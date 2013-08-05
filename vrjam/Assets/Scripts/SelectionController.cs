@@ -3,17 +3,10 @@ using System.Collections;
 
 public class SelectionController : MonoBehaviour {
 
-    public Camera m_main_camera; // TODO (Julian): Generalize these (Rift doesn't even work)
+    // TODO (Julian): Generalize these (Rift doesn't even work)
     public Camera m_standard_camera;
 
     public Connection m_connection = null;
-
-    //private float rift_dead_zone_x =  400.0f;
-    //private float rift_dead_zone_y = 75.0f;
-
-    void Start () {
-
-    }
 
     void Update () {
         float mouse_projection_distance = 100.0f;
@@ -91,27 +84,4 @@ public class SelectionController : MonoBehaviour {
         }
         return hit_object;
     }
-
-    // Uses the Rift, needs to be merged with other method at some point soon?
-    /*private GameObject NewFindObjectUnderMouse (float cast_distance) {
-        float x = Input.mousePosition.x  ScreenWidth - DeadZoneX + 0.001f;
-        float y = Input.mousePosition.y;
-        Screen.width;
-        Screen.height;
-
-        Vector3 start_position = m_main_camera.transform.position;
-        Vector3 dir = Vector3.forward;
-        dir = m_main_camera.transform.rotation * dir;
-        dir *= cast_distance;
-        Vector3 end_position = start_position + dir;
-
-        RaycastHit hit;
-        GameObject hit_object = null;
-        if (Physics.Linecast(start_position, end_position, out hit))
-        {
-            hit_object = hit.collider.gameObject;
-        }
-
-        return hit_object;
-    }*/
 }

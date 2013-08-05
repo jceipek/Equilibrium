@@ -6,6 +6,9 @@ public class ThreeDimGUI : MonoBehaviour {
     // Handle to OVRCameraController
     private OVRCameraController m_camera_controller = null;
 
+    // Handle to ContinuousInputController
+    public ContinuousInputController m_continuous_input_controller; // TODO (Julian): Figure out how to handle this better
+
     // Rift detection
     private bool   HMDPresent           = false;
     private bool   SensorPresent        = false;
@@ -121,6 +124,7 @@ public class ThreeDimGUI : MonoBehaviour {
         m_crosshair.Init();
         m_crosshair.SetCrosshairTexture(ref m_crosshair_image);
         m_crosshair.SetOVRCameraController (ref m_camera_controller);
+        m_crosshair.SetContinuousInputController (ref m_continuous_input_controller);
         UpdateFunctions += m_crosshair.UpdateCrosshair;
 
         // Check for HMD and sensor
@@ -222,7 +226,7 @@ public class ThreeDimGUI : MonoBehaviour {
         if (m_gui_render_object != null) {
             if (m_crosshair.IsCrosshairVisible() ||
                 m_rift_present_timeout > 0.0f || m_device_detection_timeout > 0.0f ||
-                ((m_mag_cal.Disabled () == false) && (m_mag_cal.Ready () == false))
+                ((m_mag_cal.Disabled() == false) && (m_mag_cal.Ready() == false))
                 ) {
                 m_gui_render_object.SetActive(true);
             } else {

@@ -8,6 +8,7 @@ public class SelectionCursor {
     public Texture m_image_crosshair     = null;
 
     public OVRCameraController m_camera_controller = null;
+    public ContinuousInputController m_continuous_input_controller = null;
 
     public float   m_fade_time           = 0.3f;
     public float   m_fade_scale          = 0.6f;
@@ -16,8 +17,8 @@ public class SelectionCursor {
     private float  m_dead_zone_x         =  400.0f;
     private float  m_dead_zone_y         =   75.0f;
 
-    private float  m_scale_speed_x        =   7.0f;
-    private float  m_scale_speed_y        =   7.0f;
+    private float  m_scale_speed_x        =   10.0f;
+    private float  m_scale_speed_y        =   10.0f;
 
     private bool   m_collision_with_geometry;
     private float  m_fade_value;
@@ -49,8 +50,8 @@ public class SelectionCursor {
     }
 
     // SetOVRCameraController
-    public void SetOVRCameraController (ref OVRCameraController cameraController) {
-        m_camera_controller = cameraController;
+    public void SetOVRCameraController (ref OVRCameraController camera_controller) {
+        m_camera_controller = camera_controller;
         m_camera_controller.GetCamera(ref m_main_camera);
 
         if(m_camera_controller.PortraitMode == true)
@@ -59,6 +60,10 @@ public class SelectionCursor {
             m_dead_zone_x = m_dead_zone_y;
             m_dead_zone_y = tmp;
         }
+    }
+
+    public void SetContinuousInputController (ref ContinuousInputController continuous_input_controller) {
+        m_continuous_input_controller = continuous_input_controller;
     }
 
     //IsCrosshairVisible
@@ -147,6 +152,13 @@ public class SelectionCursor {
         direction = m_main_camera.transform.rotation * direction;
         direction *= m_crosshair_distance;
         Vector3 end_position = start_position + direction;
+
+        // XXX: Figure out what to actually do here! (make cursor_position be where the cursor is)
+        Vector3 up = m_main_camera.transform.up * YL;
+        Vector3 right = m_main_camera.transform.right;
+        Vector3 cursor_position = end_position - up + right;
+        ///////////////////
+        m_continuous_input_controller.SetCursorLine(start_position, cursor_position);
 
         RaycastHit hit;
         if (Physics.Linecast(start_position, end_position, out hit))

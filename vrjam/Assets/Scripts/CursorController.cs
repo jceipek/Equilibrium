@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CursorController : MonoBehaviour {
+public class CursorController {
 
     public float m_speed;
 

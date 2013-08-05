@@ -3,8 +3,8 @@ using System.Collections;
 
 public class AvatarController : MonoBehaviour {
 
-	public GameObject riftCam;
-	public GameObject stdCam;
+	public GameObject m_rift_camera;
+	public GameObject m_standard_camera;
 
 	void Start() {
 		if (RiftManager.g.m_display_mode == enDISPLAY_MODE.Rift) {
@@ -15,12 +15,12 @@ public class AvatarController : MonoBehaviour {
 	}
 
 	private void SwitchToStandardCam () {
-        riftCam.SetActive(false);
-        stdCam.SetActive(true);
+        m_rift_camera.SetActive(false);
+        m_standard_camera.SetActive(true);
     }
 
     private void SwitchToRiftCam () {
-        riftCam.SetActive(true);
-        stdCam.SetActive(false);
+        m_rift_camera.SetActive(true);
+        m_standard_camera.SetActive(false);
     }
 }

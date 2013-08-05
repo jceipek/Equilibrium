@@ -190,15 +190,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: 9da535ecc7e009544bd58323d6696a4d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.83101368
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9da535ecc7e009544bd58323d6696a4d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 7.62190056
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9da535ecc7e009544bd58323d6696a4d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -7.27360916
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9da535ecc7e009544bd58323d6696a4d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -505,8 +505,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7f11245ff0548caad3ed61dfd7cdfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  riftCam: {fileID: 1046310400}
-  stdCam: {fileID: 1302627048}
+  m_rift_camera: {fileID: 1046310400}
+  m_standard_camera: {fileID: 1302627048}
 --- !u!1 &300014827
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,8 +857,8 @@ LineRenderer:
   m_PrefabInternal: {fileID: 355628966}
   m_GameObject: {fileID: 782834465}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
@@ -872,8 +872,8 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
   m_Parameters:
-    startWidth: 1
-    endWidth: 1
+    startWidth: 0
+    endWidth: 0
     m_StartColor:
       serializedVersion: 2
       rgba: 4294967295
@@ -1118,6 +1118,7 @@ GameObject:
   - 4: {fileID: 1046310401}
   - 114: {fileID: 1046310403}
   - 114: {fileID: 1046310402}
+  - 114: {fileID: 1046310405}
   m_Layer: 8
   m_Name: OVRCameraController
   m_TagString: Untagged
@@ -1132,7 +1133,7 @@ Transform:
   m_PrefabInternal: {fileID: 205991483}
   m_GameObject: {fileID: 1046310400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.83101368, y: 7.62190056, z: -7.27360916}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 634892478}
@@ -1179,6 +1180,18 @@ MonoBehaviour:
   BackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   NearClipPlane: .150000006
   FarClipPlane: 1000
+--- !u!114 &1046310405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1046310400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d230c3b8a53460e8e2fb05a5b5fc9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_crosshair_image: {fileID: 2800000, guid: 64ce76f827a71b44da62c30c0b506fd2, type: 3}
 --- !u!1 &1068907169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdbdc54e8ceaf442cb8df0cc2a992482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_display_mode: 1
+  m_display_mode: 0
 --- !u!4 &1147665185
 Transform:
   m_ObjectHideFlags: 0
@@ -1710,7 +1723,7 @@ GameObject:
   - 114: {fileID: 1937589556}
   - 114: {fileID: 1937589557}
   m_Layer: 0
-  m_Name: 3D Cursor (I'm thinking of using this soley for connection endpoints)
+  m_Name: 3D Cursor (I'm thinking of using this solely for connection endpoints)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

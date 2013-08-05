@@ -54,7 +54,7 @@ public class SelectionController : MonoBehaviour {
     }
 
     public void SelectNode (Node node) {
-        GameObject connection = (GameObject)Instantiate(Resources.Load("Connection"));
+        GameObject connection = Instantiate(Resources.Load("Connection")) as GameObject;
         Connection connection_component = connection.GetComponent<Connection>();
         connection_component.InitializeWithStartNode(node);
         m_connection = connection_component;

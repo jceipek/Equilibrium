@@ -20,7 +20,7 @@ public class RandomSphereGenerator : MonoBehaviour {
     }
 
     private Node GenerateNodeAt (Vector3 pos) {
-        GameObject node = (GameObject)Instantiate(Resources.Load("Node"));
+        GameObject node = Instantiate(Resources.Load("Node")) as GameObject;
         node.transform.position = pos;
         Mass mass_component = node.GetComponent<Mass>();
         mass_component.Initialize(Random.value * (m_node_max_mass - m_node_min_mass) + m_node_min_mass);

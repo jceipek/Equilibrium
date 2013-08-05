@@ -47,7 +47,7 @@ public class Connection : MonoBehaviour {
     public void SiphonFromMassToReachMinimum (Mass mass_large, Mass mass_probably_too_small, float transfer_rate) {
         if (mass_probably_too_small.GetAmountAvailable() < 0) {
             float mass_needed = -mass_probably_too_small.GetAmountAvailable();
-            float free_mass = mass_large.GetAmountAvailable();
+            //float free_mass = mass_large.GetAmountAvailable();
             float delta = transfer_rate * Time.deltaTime;
             if (mass_needed < delta) {
                 delta = mass_needed;

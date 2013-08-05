@@ -204,7 +204,7 @@ public class OVRCameraController : OVRComponent
 		Vector3 EyePosition = EyeCenterPosition;
 
 		// Vertical FOV
-		camera.fov = VerticalFOV;
+		camera.fieldOfView = VerticalFOV;
 
 		// Aspect ratio
 		camera.aspect = AspectRatio;

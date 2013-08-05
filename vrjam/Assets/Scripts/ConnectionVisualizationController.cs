@@ -20,7 +20,7 @@ public class ConnectionVisualizationController : MonoBehaviour {
             float start_width = start_mass.Get() * RulesManager.g.m_MASS_TO_SIZE_RATIO / 2.0f * c;
             if (end != null) {
                 Mass end_mass = end.GetComponent<Mass>();
-                float end_width = start_mass.Get() * RulesManager.g.m_MASS_TO_SIZE_RATIO / 2.0f * c;
+                float end_width = end_mass.Get() * RulesManager.g.m_MASS_TO_SIZE_RATIO / 2.0f * c;
                 renderer.SetPosition(1, end.gameObject.transform.position);
                 renderer.SetWidth(start_width, end_width);
             } else {

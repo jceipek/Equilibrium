@@ -8,8 +8,8 @@ public class SelectionController : MonoBehaviour {
 
     public Connection m_connection = null;
 
-    private float rift_dead_zone_x =  400.0f;
-    private float rift_dead_zone_y = 75.0f;
+    //private float rift_dead_zone_x =  400.0f;
+    //private float rift_dead_zone_y = 75.0f;
 
     void Start () {
 

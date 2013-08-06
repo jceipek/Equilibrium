@@ -1117,7 +1117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436bce8aa6bc54dcd89c265b51792d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_node_count: 15
+  m_node_count: 200
   m_node_min_mass: 3
   m_node_max_mass: 5
   m_connection_count: 0
@@ -1439,6 +1439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_crosshair_texture: {fileID: 2800000, guid: 64ce76f827a71b44da62c30c0b506fd2, type: 3}
   m_continuous_input_controller: {fileID: 296998550}
+  m_standard_camera: {fileID: 1302627053}
 --- !u!1001 &1326375910
 Prefab:
   m_ObjectHideFlags: 0

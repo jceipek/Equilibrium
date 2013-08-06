@@ -5,6 +5,7 @@ public class TwoDimGUI : MonoBehaviour {
 
     public Texture m_crosshair_texture;
     public ContinuousInputController m_continuous_input_controller;
+    public Camera m_standard_camera;
 
     private Vector3 m_mouse_pos;
 
@@ -14,13 +15,19 @@ public class TwoDimGUI : MonoBehaviour {
             Debug.LogError("TwoDimGUI: Assign a Crosshair Texture in the inspector.");
             return;
         }
+
+        // Make sure to hide mouse cursor
+        if (Application.isEditor == false) {
+            Screen.showCursor = false;
+        }
     }
 
     // Update is called once per frame
     void Update () {
         m_mouse_pos = Input.mousePosition;
-        Debug.Log(m_mouse_pos);
-        //Camera.main.ScreenPointToRay(Input.mousePosition);
+        //m_continuous_input_controller.SetCursorLine();
+        Ray mouse_ray = m_standard_camera.ScreenPointToRay(Input.mousePosition);
+        m_continuous_input_controller.SetCursorRay(ref mouse_ray);
     }
 
     void OnGUI() {

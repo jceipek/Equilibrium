@@ -154,7 +154,7 @@ public class SelectionCursor {
         Vector3 end_position = start_position + direction;
 
         // XXX: Figure out what to actually do here! (make cursor_position be where the cursor is)
-        Vector3 up = m_main_camera.transform.up * YL;
+        Vector3 up = m_main_camera.transform.up * (YL * 0.01f);
         Vector3 right = m_main_camera.transform.right;
         Vector3 cursor_position = end_position - up + right;
         ///////////////////

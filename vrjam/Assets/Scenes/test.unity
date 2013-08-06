@@ -493,6 +493,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1937589555}
   - {fileID: 1302627049}
   - {fileID: 1046310401}
   - {fileID: 1845498708}
@@ -521,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6257124415d64c769a8002859e6e0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_debug_cursor_REMOVE_ME: {fileID: 1937589554}
 --- !u!114 &296998551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1777,7 +1779,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1937589555}
   m_Layer: 0
-  m_Name: 3D Cursor (I'm thinking of using this solely for connection endpoints)
+  m_Name: 3D Cursor (For Debugging by Alethea)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1794,4 +1796,4 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1398311486}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 296998548}

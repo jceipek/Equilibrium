@@ -13,6 +13,8 @@ public class ContinuousInputController : MonoBehaviour {
 
     private Node m_selected = null;
 
+    public GameObject m_debug_cursor_REMOVE_ME;
+
     // Use this for initialization
     void Start () {
         m_selection_controller = gameObject.GetComponent<SelectionController>();
@@ -52,6 +54,9 @@ public class ContinuousInputController : MonoBehaviour {
             }
             m_selection_controller.TryToDragConnectionTo(mouse_pos);
         }
+
+        DebugMoveCursor();
+
     }
 
     void OnDrawGizmos () {
@@ -84,6 +89,10 @@ public class ContinuousInputController : MonoBehaviour {
             hit_object = hit.collider.gameObject;
         }
         return hit_object;
+    }
+
+    private void DebugMoveCursor () {
+        m_debug_cursor_REMOVE_ME.transform.position = m_end_position;
     }
 
 }

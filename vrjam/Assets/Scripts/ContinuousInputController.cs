@@ -62,7 +62,7 @@ public class ContinuousInputController : MonoBehaviour {
         Gizmos.DrawRay(m_pointer_ray);
     }
 
-    public void SetCursorRay (ref Ray ray) {
+    public void SetCursorRay (Ray ray) {
         m_pointer_ray = ray;
     }
 

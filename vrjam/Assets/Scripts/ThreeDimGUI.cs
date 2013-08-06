@@ -9,6 +9,9 @@ public class ThreeDimGUI : MonoBehaviour {
     // Handle to ContinuousInputController
     public ContinuousInputController m_continuous_input_controller; // TODO (Julian): Figure out how to handle this better
 
+    // Handle to DiscreteInputController
+    public DiscreteInputController m_discrete_input_controller; // TODO (Julian): Figure out how to handle this better
+
     // Rift detection
     private bool   HMDPresent           = false;
     private bool   SensorPresent        = false;

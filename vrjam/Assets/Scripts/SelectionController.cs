@@ -19,6 +19,20 @@ public class SelectionController : MonoBehaviour {
         m_connection = connection_component;
     }
 
+    public void HighlightSelectedNode () {
+
+    }
+
+    public void HighlightNodeIfReachable (Node node) {
+        if (CanConnectTo (node)) {
+            node.Highlight();
+        }
+    }
+
+    public bool CanConnectTo (Node node) {
+        return m_connection.CanFinishConnectionWithEndNode(node);
+    }
+
     public bool TryToConnectTo (Node node) {
         bool success = m_connection.TryToFinishConnectionWithEndNode(node);
         if (!success) m_connection.DestroyConnection(); // TODO (Julian): Maybe move this into TryToFinishConnectionWithEndNode?

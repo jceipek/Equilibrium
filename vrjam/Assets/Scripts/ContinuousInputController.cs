@@ -12,6 +12,7 @@ public class ContinuousInputController : MonoBehaviour {
     private Ray m_pointer_ray;
 
     private Node m_selected = null;
+    private Node m_target = null;
 
     public GameObject m_debug_cursor_REMOVE_ME;
 
@@ -42,15 +43,24 @@ public class ContinuousInputController : MonoBehaviour {
                 } else {
                     m_selection_controller.AbortConnection();
                 }
+                m_target.UnHighlight();
                 m_selected = null;
             }
         } else if (m_selected) {
             float distance_in_plane = (m_pointer_ray.origin - m_selected.transform.position).magnitude;
             Vector3 mouse_pos = m_pointer_ray.origin + m_pointer_ray.direction * distance_in_plane;
             GameObject under_cursor = FindObjectUnderCursor(mouse_projection_distance);
+            Node node_under_cursor = null;
             if (under_cursor) {
+                node_under_cursor = under_cursor.GetComponent<Node>();
+            }
+            if (node_under_cursor) {
                 // Snap to object
-                mouse_pos = under_cursor.transform.position;
+                mouse_pos = node_under_cursor.transform.position;
+                m_selection_controller.HighlightNodeIfReachable(node_under_cursor);
+                m_target = node_under_cursor;
+            } else {
+                if (m_target) m_target.UnHighlight();
             }
             m_selection_controller.TryToDragConnectionTo(mouse_pos);
         }

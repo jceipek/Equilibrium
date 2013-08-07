@@ -63,18 +63,26 @@ public class Connection : MonoBehaviour {
         m_end_point = start_node.gameObject.transform.position;
     }
 
-    public bool TryToFinishConnectionWithEndNode (Node end_node) {
+    public bool CanFinishConnectionWithEndNode (Node end_node) {
         if (m_start_node == end_node || m_start_node.DoesShareConnectionWith(end_node)) {
             return false;
         }
+        float minimum = DetermineMassNeededForConnectionBetween(m_start_node, end_node);
+        if (m_mass.Get() - minimum < 0.0f) {
+            return false;
+        }
+        return true;
+    }
+
+    public bool TryToFinishConnectionWithEndNode (Node end_node) {
+        if (!CanFinishConnectionWithEndNode(end_node)) {
+            return false;
+        }
+        float minimum = DetermineMassNeededForConnectionBetween(m_start_node, end_node);
+        m_mass.InitializeMinimum(minimum);
         m_end_node = end_node;
         m_start_node.AddConnection(this); // TODO (Julian): Should this instead go in InitializeWithStartNode?
         m_end_node.AddConnection(this);
-        float minimum = DetermineMassNeededForConnectionBetween(m_start_node, m_end_node);
-        m_mass.InitializeMinimum(minimum);
-        if (m_mass.GetAmountAvailable() < 0.0f) {
-            return false;
-        }
         return true; // Change to return false when would be unable to reach
     }
 

@@ -13,6 +13,11 @@ public class Connection : MonoBehaviour {
         m_mass = this.GetComponent<Mass>();
     }
 
+    void OnDrawGizmos () {
+
+        Gizmos.DrawLine(m_start_node.transform.position, m_end_point);
+    }
+
     void Update () {
         // TODO XXX (Julian): This is currently skipping mass in the connection itself
         if (IsComplete()) {
@@ -72,6 +77,12 @@ public class Connection : MonoBehaviour {
             return false;
         }
         return true;
+    }
+
+    public void MassCreateAndFinishConnectionWithEndNode (Node end_node) {
+        float minimum = DetermineMassNeededForConnectionBetween(m_start_node, end_node);
+        m_mass.Initialize(minimum);
+        TryToFinishConnectionWithEndNode(end_node);
     }
 
     public bool TryToFinishConnectionWithEndNode (Node end_node) {

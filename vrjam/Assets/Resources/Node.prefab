@@ -29,6 +29,7 @@ GameObject:
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400006}
   m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
@@ -43,7 +44,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4.75}
+  m_LocalPosition: {x: -3, y: 0, z: 9.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -120,6 +121,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_connections: []
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc5e9b3ce787433ea48d7450dbef3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_default_material: {fileID: 2100000, guid: 4ff4e7c2a9ab34fa6814cb1d8510fb76, type: 2}
+  m_highlighted_material: {fileID: 2100000, guid: 780e93abb2e4e44c5a19086989b11f51,
+    type: 2}
+  m_default_color: {r: .192156866, g: .298039228, b: 1, a: 0}
+  m_highlight_color: {r: 1, g: 1, b: 1, a: 0}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

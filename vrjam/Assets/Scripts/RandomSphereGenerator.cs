@@ -48,9 +48,11 @@ public class RandomSphereGenerator : MonoBehaviour {
 
     private void GenerateConnections () {
         EnsureConnectionCountIsPossible();
-        bool success = false;
         for (int index = 0; index < m_connection_count; index++) {
+            bool success = false;
+            Debug.Log("CONN: "+index);
             do {
+                Debug.Log("LOOP: "+m_connection_count);
                 int first = index % m_node_count;
                 int second = Random.Range(0, m_node_list.Count);
                 Node first_node = m_node_list[first];
@@ -60,7 +62,7 @@ public class RandomSphereGenerator : MonoBehaviour {
                     GameObject connection_object = (GameObject)Instantiate(Resources.Load("Connection"));
                     Connection connection = connection_object.GetComponent<Connection>();
                     connection.InitializeWithStartNode(first_node);
-                    connection.TryToFinishConnectionWithEndNode(second_node); // TODO: Change once this doesn't work anymore by giving the connection extra internal mass
+                    connection.MassCreateAndFinishConnectionWithEndNode(second_node); // TODO: Change once this doesn't work anymore by giving the connection extra internal mass
                 }
             } while (!success);
         }

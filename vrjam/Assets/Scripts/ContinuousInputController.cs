@@ -13,10 +13,14 @@ public class ContinuousInputController : MonoBehaviour {
 
     private Node m_selected = null;
     private Node m_target = null;
+    private static LayerMask m_SELECTABLE_LAYER;
 
     public GameObject m_debug_cursor_REMOVE_ME;
 
-    // Use this for initialization
+    void OnEnable () {
+        m_SELECTABLE_LAYER = (1 << LayerMask.NameToLayer("Selectable"));
+    }
+
     void Start () {
         m_selection_controller = gameObject.GetComponent<SelectionController>();
     }
@@ -95,7 +99,7 @@ public class ContinuousInputController : MonoBehaviour {
         RaycastHit hit;
         GameObject hit_object = null;
         if (debug) Debug.DrawRay(m_pointer_ray.origin, m_pointer_ray.direction * cast_distance, Color.yellow, 0.1f);
-        if (Physics.Raycast(m_pointer_ray.origin, m_pointer_ray.direction, out hit, cast_distance)) {
+        if (Physics.Raycast(m_pointer_ray.origin, m_pointer_ray.direction, out hit, cast_distance, m_SELECTABLE_LAYER)) {
             hit_object = hit.collider.gameObject;
         }
         return hit_object;

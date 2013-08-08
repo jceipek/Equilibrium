@@ -13,11 +13,14 @@ public class ContinuousInputController : MonoBehaviour {
 
     private Node m_selected = null;
     private Node m_target = null;
-    private static LayerMask m_SELECTABLE_LAYER = (1 << LayerMask.NameToLayer("Selectable"));
+    private static LayerMask m_SELECTABLE_LAYER;
 
     public GameObject m_debug_cursor_REMOVE_ME;
 
-    // Use this for initialization
+    void OnEnable () {
+        m_SELECTABLE_LAYER = (1 << LayerMask.NameToLayer("Selectable"));
+    }
+
     void Start () {
         m_selection_controller = gameObject.GetComponent<SelectionController>();
     }

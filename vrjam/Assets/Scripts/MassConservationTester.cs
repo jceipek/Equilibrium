@@ -41,9 +41,9 @@ public class MassConservationTester : MonoBehaviour {
         UpdateValues(ref m_current_free_mass, ref m_current_mass);
         float mass_difference = m_current_mass - m_mass_snapshot;
         if (mass_difference >= 0.1f) {
-            //Debug.Log("C_ERROR: Mass was gained: " + mass_difference);
+            Debug.Log("C_ERROR: Mass was gained: " + mass_difference);
         } else if (mass_difference <= -0.1f) {
-            //Debug.Log("C_ERROR: Mass was lost: " + (-mass_difference));
+            Debug.Log("C_ERROR: Mass was lost: " + (-mass_difference));
         }
     }
 

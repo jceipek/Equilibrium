@@ -50,9 +50,7 @@ public class RandomSphereGenerator : MonoBehaviour {
         EnsureConnectionCountIsPossible();
         for (int index = 0; index < m_connection_count; index++) {
             bool success = false;
-            Debug.Log("CONN: "+index);
             do {
-                Debug.Log("LOOP: "+m_connection_count);
                 int first = index % m_node_count;
                 int second = Random.Range(0, m_node_list.Count);
                 Node first_node = m_node_list[first];

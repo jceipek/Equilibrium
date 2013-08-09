@@ -512,6 +512,7 @@ GameObject:
   - 114: {fileID: 296998550}
   - 114: {fileID: 296998551}
   - 114: {fileID: 296998552}
+  - 114: {fileID: 296998553}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Untagged
@@ -583,6 +584,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15138159760b4b15b5c3c1feb528eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &296998553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 296998547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9abbe8b0ed7e4a0d80791054075a561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_collider: {fileID: 0}
+  speed: .100000001
+  m_current_node: {fileID: 0}
+  m_next_node: {fileID: 0}
+  m_current_connection: {fileID: 0}
 --- !u!1 &300014827
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +992,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 7e79402e8fde74bccbea04831a6a0a9f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7e79402e8fde74bccbea04831a6a0a9f, type: 2}
   m_RootGameObject: {fileID: 1750741228}
@@ -1320,52 +1341,6 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
---- !u!1 &919712158
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 919712160}
-  - 114: {fileID: 919712159}
-  m_Layer: 0
-  m_Name: MessengerHelper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &919712159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 919712158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
---- !u!4 &919712160
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 919712158}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
 --- !u!1 &963521320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,10 +1368,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436bce8aa6bc54dcd89c265b51792d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_node_count: 100
+  m_node_count: 50
   m_node_min_mass: 2
   m_node_max_mass: 3
-  m_connection_count: 50
+  m_connection_count: 100
   m_sphere_radius: 20
   m_allow_nodes_inside_sphere: 1
 --- !u!4 &963521322
@@ -2052,7 +2027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1750741229
 MonoBehaviour:
   m_ObjectHideFlags: 0

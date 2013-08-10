@@ -13,11 +13,6 @@ public class InfectedNodeController : MonoBehaviour {
         m_node = gameObject.GetComponent<Node>();
     }
 
-    // Use this for initialization
-    void Start () {
-
-    }
-
     // Update is called once per frame
     void Update () {
         // Can Refactor for more efficiency (connections instead of nodes)

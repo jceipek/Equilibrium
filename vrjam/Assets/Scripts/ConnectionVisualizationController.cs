@@ -17,12 +17,15 @@ public class ConnectionVisualizationController : MonoBehaviour {
         float end_infection_percent = 0.0f;
         if (start) {
             InfectedNodeController start_infection = start.GetComponent<InfectedNodeController>();
-            start_infection_percent = start_infection.GetInfectionPercentForNode(start);
-            Debug.Log(start_infection_percent);
+            if (end) {
+                start_infection_percent = start_infection.GetInfectionPercentForNode(end);
+            }
         }
         if (end) {
             InfectedNodeController end_infection = end.GetComponent<InfectedNodeController>();
-            end_infection_percent = end_infection.GetInfectionPercentForNode(end);
+            if (start) {
+                end_infection_percent = end_infection.GetInfectionPercentForNode(start);
+            }
         }
 
         Vector3 end_point = m_connection_component.GetEndPoint();

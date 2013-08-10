@@ -531,10 +531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7f11245ff0548caad3ed61dfd7cdfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_input_mode: 1
   m_camera_target: {fileID: 787515109}
-  m_current_node: {fileID: 0}
   m_next_node: {fileID: 0}
-  m_speed: .100000001
+  m_speed: .200000003
 --- !u!114 &296998550
 MonoBehaviour:
   m_ObjectHideFlags: 0

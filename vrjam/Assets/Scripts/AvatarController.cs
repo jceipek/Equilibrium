@@ -2,7 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum enINPUT_MODE {KeyToMove, WaitToMove};
+
 public class AvatarController : MonoBehaviour {
+
+    public enINPUT_MODE m_input_mode = enINPUT_MODE.WaitToMove;
 
     public Camera m_camera_target; // TODO (JULIAN): Put this functionality elsewhere
 
@@ -13,7 +17,10 @@ public class AvatarController : MonoBehaviour {
     private Node m_current_node;
 
     void Start () {
-        StartCoroutine(SetupRandom()); // TODO (JULIAN): Replace with manual placement
+        if (!m_next_node) {
+            StartCoroutine(SetupRandom());
+        }
+        m_is_moving = true;
     }
 
     void Update () {
@@ -27,9 +34,14 @@ public class AvatarController : MonoBehaviour {
                 gameObject.transform.position += (direction * m_speed);
             } else {
                 m_current_node = m_next_node;
-                StartCoroutine(MoveInSeconds(0.3f));
-                //if (Input.GetButtonDown("Select")) {
-                //}
+                if (m_input_mode == enINPUT_MODE.KeyToMove) {
+                    if (Input.GetButtonDown("Select")) {
+                        PickNodeInSight();
+                        m_is_moving = true;
+                    }
+                } else if (m_input_mode == enINPUT_MODE.WaitToMove) {
+                    StartCoroutine(MoveInSeconds(0.3f));
+                }
             }
         }
     }
@@ -45,7 +57,6 @@ public class AvatarController : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         Node[] node_objects = FindObjectsOfType(typeof(Node)) as Node[];
         m_next_node = node_objects[0];
-        m_is_moving = true;
     }
 
     private void PickNodeInSight () {
@@ -54,15 +65,11 @@ public class AvatarController : MonoBehaviour {
         foreach (Node node in candidate_nodes) {
             Vector3 node_direction = (node.transform.position - m_current_node.transform.position).normalized;
             float current_dot = Vector3.Dot(node_direction, m_camera_target.transform.forward);
-            Debug.Log(current_dot);
             if (current_dot > largest_dot) {
                 largest_dot = current_dot;
                 m_next_node = node;
             }
         }
-        //if (candidate_nodes.Count > 0) {
-        //    m_next_node = candidate_nodes[0];
-        //}
     }
 
     void OnDrawGizmos () {

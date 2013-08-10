@@ -26,6 +26,7 @@ public class AvatarController : MonoBehaviour {
                 Vector3 direction = position_difference.normalized;
                 gameObject.transform.position += (direction * m_speed);
             } else {
+                m_current_node = m_next_node;
                 StartCoroutine(MoveInSeconds(0.3f));
                 //if (Input.GetButtonDown("Select")) {
                 //}
@@ -48,7 +49,6 @@ public class AvatarController : MonoBehaviour {
     }
 
     private void PickNodeInSight () {
-        m_current_node = m_next_node;
         float largest_dot = -0.0f;
         List<Node> candidate_nodes = m_current_node.GetConnectedNodes();
         foreach (Node node in candidate_nodes) {

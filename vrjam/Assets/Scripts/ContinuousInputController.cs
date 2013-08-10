@@ -25,62 +25,6 @@ public class ContinuousInputController : MonoBehaviour {
         m_selection_controller = gameObject.GetComponent<SelectionController>();
     }
 
-    // Update is called once per frame
-    void Update () {
-        float mouse_projection_distance = 100.0f;
-
-        bool select_clicked = Input.GetButtonDown("Select");
-        bool select_unclicked = Input.GetButtonUp("Select");
-        if (select_clicked || select_unclicked) {
-            Node pickable_under_cursor = null;
-            GameObject under_cursor = FindObjectUnderCursor(cast_distance: mouse_projection_distance, debug: true);
-            if (under_cursor) pickable_under_cursor = under_cursor.GetComponent<Node>();
-
-            if (select_clicked && pickable_under_cursor) {
-                m_selection_controller.SelectNode(pickable_under_cursor);
-                m_selected = pickable_under_cursor;
-            }
-
-            if (select_unclicked && m_selected) {
-                if (pickable_under_cursor) {
-                    m_selection_controller.TryToConnectTo(pickable_under_cursor);
-                } else {
-                    m_selection_controller.AbortConnection();
-                }
-                m_target.UnHighlight();
-                m_selected = null;
-            }
-        } else if (m_selected) {
-            float distance_in_plane = (m_pointer_ray.origin - m_selected.transform.position).magnitude;
-            Vector3 mouse_pos = m_pointer_ray.origin + m_pointer_ray.direction * distance_in_plane;
-            GameObject under_cursor = FindObjectUnderCursor(mouse_projection_distance);
-            Node node_under_cursor = null;
-            if (under_cursor) {
-                node_under_cursor = under_cursor.GetComponent<Node>();
-            }
-            if (node_under_cursor) {
-                // Snap to object
-                mouse_pos = node_under_cursor.transform.position;
-                m_selection_controller.HighlightNodeIfReachable(node_under_cursor);
-                m_target = node_under_cursor;
-            } else {
-                if (m_target) m_target.UnHighlight();
-            }
-            m_selection_controller.TryToDragConnectionTo(mouse_pos);
-        }
-
-        DebugMoveCursor();
-
-    }
-
-    void OnDrawGizmos () {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(m_start_position, m_end_position);
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(m_pointer_ray);
-    }
-
     public void SetCursorRay (Ray ray) {
         m_pointer_ray = ray;
     }

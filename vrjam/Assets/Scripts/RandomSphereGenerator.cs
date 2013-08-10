@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class RandomSphereGenerator : MonoBehaviour {
 
     public int m_node_count;
-    public float m_node_min_mass;
-    public float m_node_max_mass;
     public int m_connection_count;
 
     public float m_sphere_radius;
@@ -22,8 +20,6 @@ public class RandomSphereGenerator : MonoBehaviour {
     private Node GenerateNodeAt (Vector3 pos) {
         GameObject node = Instantiate(Resources.Load("Node")) as GameObject;
         node.transform.position = pos;
-        Mass mass_component = node.GetComponent<Mass>();
-        mass_component.Initialize(Random.value * (m_node_max_mass - m_node_min_mass) + m_node_min_mass);
         return node.GetComponent<Node>();
     }
 
@@ -60,7 +56,7 @@ public class RandomSphereGenerator : MonoBehaviour {
                     GameObject connection_object = (GameObject)Instantiate(Resources.Load("Connection"));
                     Connection connection = connection_object.GetComponent<Connection>();
                     connection.InitializeWithStartNode(first_node);
-                    connection.MassCreateAndFinishConnectionWithEndNode(second_node); // TODO: Change once this doesn't work anymore by giving the connection extra internal mass
+                    connection.FinishConnectionWithEndNode(second_node);
                 }
             } while (!success);
         }

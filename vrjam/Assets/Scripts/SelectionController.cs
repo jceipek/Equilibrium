@@ -24,11 +24,17 @@ public class SelectionController : MonoBehaviour {
     }
 
     public void HighlightNodeIfReachable (Node node) {
-        if (CanConnectTo (node)) {
+        //if (CanConnectTo (node)) {
             node.Highlight();
-        }
+        //}
     }
 
+    public void AbortConnection () {
+        m_connection.DestroyConnection();
+        m_connection = null;
+    }
+
+    /*
     public bool CanConnectTo (Node node) {
         return m_connection.CanFinishConnectionWithEndNode(node);
     }
@@ -43,9 +49,6 @@ public class SelectionController : MonoBehaviour {
     public bool TryToDragConnectionTo (Vector3 position) {
         return m_connection.TryToReachPoint(position);
     }
+    */
 
-    public void AbortConnection () {
-        m_connection.DestroyConnection();
-        m_connection = null;
-    }
 }

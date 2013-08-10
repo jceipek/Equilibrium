@@ -53,7 +53,6 @@ public class FollowNode : MonoBehaviour {
             foreach (Connection c in m_next_node.m_connections) {
                 if(c.GetInstanceID() != m_current_connection.GetInstanceID()) {
                     new_connection = c;
-                    Debug.Log("YAY");
                     break;
                 }
             }

@@ -36,7 +36,6 @@ public class InfectedNodeController : MonoBehaviour {
             if (!m_infection_percentages.ContainsKey(node)) {
                 return 0.0f;
             }
-            Debug.Log("BRANCH");
             return m_infection_percentages[node];
         }
         return 0.0f;

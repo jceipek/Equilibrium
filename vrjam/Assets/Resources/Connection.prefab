@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_connection_component: {fileID: 11400000}
-  m_normal_color: {r: .494117647, g: .0705882385, b: 0, a: .498039216}
-  m_infected_color: {r: 0, g: 0, b: 0, a: .498039216}
+  m_normal_color: {r: 1, g: 1, b: 1, a: .498039216}
+  m_infected_color: {r: .0758621693, g: 1, b: 0, a: .498039216}
 --- !u!120 &12000000
 LineRenderer:
   m_ObjectHideFlags: 1

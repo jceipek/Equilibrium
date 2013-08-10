@@ -60,7 +60,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 9.75}
+  m_LocalPosition: {x: 0, y: 0, z: 4.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -200,7 +200,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_node: {fileID: 11400004}
+  m_infection: {fileID: 11400000}
   m_velocity: 40
+  m_refresh_frequency: .200000003
+  m_normal_color: {r: .319472551, g: .102941155, b: 1, a: .501960814}
+  m_infected_color: {r: .208113581, g: 1, b: .102941155, a: .501960814}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

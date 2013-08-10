@@ -3,8 +3,9 @@ using System.Collections;
 
 public class TrailController : MonoBehaviour {
 
-	public Vector3 m_velocity;
-	public float m_life;
+	private Vector3 m_velocity;
+	private float m_life;
+	private Color m_color;
 
 	// Update is called once per frame
 	void Update () {
@@ -13,5 +14,13 @@ public class TrailController : MonoBehaviour {
 		if (m_life <= 0.0f) {
 			Destroy(gameObject);
 		}
+	}
+
+	public void InitializeWith(Color color, Vector3 velocity, float life) {
+		m_velocity = velocity;
+		m_life = life;
+		m_color = color;
+		renderer.material.SetColor ("_TintColor", m_color);
+		//renderer.material.color = m_color;
 	}
 }

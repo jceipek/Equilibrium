@@ -1312,8 +1312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436bce8aa6bc54dcd89c265b51792d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_node_count: 30
-  m_connection_count: 30
+  m_node_count: 10
+  m_connection_count: 10
   m_sphere_radius: 20
   m_allow_nodes_inside_sphere: 1
 --- !u!4 &963521322

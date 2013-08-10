@@ -6,10 +6,11 @@ public class AvatarController : MonoBehaviour {
 
     public Camera m_camera_target; // TODO (JULIAN): Put this functionality elsewhere
 
-    public Node m_current_node;
     public Node m_next_node;
     public float m_speed;
     private bool m_is_moving = false;
+
+    private Node m_current_node;
 
     void Start () {
         StartCoroutine(SetupRandom()); // TODO (JULIAN): Replace with manual placement
@@ -25,12 +26,17 @@ public class AvatarController : MonoBehaviour {
                 Vector3 direction = position_difference.normalized;
                 gameObject.transform.position += (direction * m_speed);
             } else {
-                if (Input.GetButtonDown("Select")) {
-                    RandomlyPickNextNode(); // TODO: Change to actual selection behavior
-                    m_is_moving = true;
-                }
+                StartCoroutine(MoveInSeconds(0.3f));
+                //if (Input.GetButtonDown("Select")) {
+                //}
             }
         }
+    }
+
+    private IEnumerator MoveInSeconds (float seconds) {
+        yield return new WaitForSeconds(seconds);
+        PickNodeInSight();
+        m_is_moving = true;
     }
 
     private IEnumerator SetupRandom () {
@@ -41,16 +47,16 @@ public class AvatarController : MonoBehaviour {
         m_is_moving = true;
     }
 
-    private void RandomlyPickNextNode () {
-        float smallest_angle = Mathf.Infinity;
-        List<Node> candidate_nodes = m_next_node.GetConnectedNodes();
+    private void PickNodeInSight () {
+        m_current_node = m_next_node;
+        float largest_dot = -0.0f;
+        List<Node> candidate_nodes = m_current_node.GetConnectedNodes();
         foreach (Node node in candidate_nodes) {
-            Vector3 node_direction = node.transform.position - m_next_node.transform.position;
-            Quaternion rotation = Quaternion.FromToRotation(m_camera_target.transform.forward, node_direction);
-            float current_angle = Mathf.Abs(Quaternion.Angle(m_camera_target.transform.rotation, rotation));
-            Debug.Log(current_angle);
-            if (current_angle < smallest_angle) {
-                smallest_angle = current_angle;
+            Vector3 node_direction = (node.transform.position - m_current_node.transform.position).normalized;
+            float current_dot = Vector3.Dot(node_direction, m_camera_target.transform.forward);
+            Debug.Log(current_dot);
+            if (current_dot > largest_dot) {
+                largest_dot = current_dot;
                 m_next_node = node;
             }
         }
@@ -60,8 +66,9 @@ public class AvatarController : MonoBehaviour {
     }
 
     void OnDrawGizmos () {
+        Gizmos.color = Color.blue;
         Vector3 position = m_camera_target.transform.position;
-        Vector3 end = position + m_camera_target.transform.forward * 3.0f;
+        Vector3 end = position + m_camera_target.transform.forward * 10.0f;
         Gizmos.DrawLine(position, end);
     }
 

@@ -79,6 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_connection_component: {fileID: 11400000}
+  m_normal_color: {r: .494117647, g: .0705882385, b: 0, a: .498039216}
+  m_infected_color: {r: 0, g: 0, b: 0, a: .498039216}
 --- !u!120 &12000000
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -105,10 +107,10 @@ LineRenderer:
     endWidth: .100000001
     m_StartColor:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 4278194814
     m_EndColor:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 4278194814
   m_UseWorldSpace: 1
 --- !u!1001 &100100000
 Prefab:

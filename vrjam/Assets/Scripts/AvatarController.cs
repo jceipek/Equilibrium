@@ -56,7 +56,9 @@ public class AvatarController : MonoBehaviour {
         // Wait until level has been randomly set up:
         yield return new WaitForSeconds(0.5f);
         Node[] node_objects = FindObjectsOfType(typeof(Node)) as Node[];
-        m_next_node = node_objects[0];
+        if (node_objects.Length > 0) {
+            m_next_node = node_objects[0];
+        }
     }
 
     private void PickNodeInSight () {

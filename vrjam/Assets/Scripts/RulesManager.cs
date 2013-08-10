@@ -4,6 +4,7 @@ using System.Collections;
 public class RulesManager : MonoBehaviour {
     public static RulesManager g;
 
+    public float m_INFECTION_SPEED = 0.1f;
     public float m_MASS_TO_SIZE_RATIO = 0.54f; // May replace with proper volume calculation
     public float m_MASS_TO_LENGTH_RATIO = 0.54f;
     public float m_MASS_TO_LIGHT_RATIO = 0.01f;

@@ -33,6 +33,17 @@ public class Node : MonoBehaviour {
         return false;
     }
 
+    public Connection ConnectionSharedWith (Node other_node) {
+        foreach (Connection connection in m_connections) {
+            Node start_node = connection.GetStartNode();
+            Node end_node = connection.GetEndNode();
+            if (start_node == other_node || end_node == other_node) {
+                return connection;
+            }
+        }
+        return null;
+    }
+
     public List<Node> GetConnectedNodes () {
         List<Node> connected = new List<Node>();
         foreach (Connection connection in m_connections) {

@@ -27,7 +27,7 @@ public class AvatarController : MonoBehaviour {
         if (m_next_node) {
             if (m_is_moving) {
                 Vector3 position_difference = m_next_node.transform.position - gameObject.transform.position;
-                if (position_difference.magnitude < 0.5f) {
+                if (position_difference.magnitude < 0.1f) {
                     m_is_moving = false;
                 }
                 Vector3 direction = position_difference.normalized;
@@ -74,11 +74,11 @@ public class AvatarController : MonoBehaviour {
         }
     }
 
-    void OnDrawGizmos () {
+    /*void OnDrawGizmos () {
         Gizmos.color = Color.blue;
         Vector3 position = m_camera_target.transform.position;
         Vector3 end = position + m_camera_target.transform.forward * 10.0f;
         Gizmos.DrawLine(position, end);
-    }
+    }*/
 
 }

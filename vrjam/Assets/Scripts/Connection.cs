@@ -7,11 +7,13 @@ public class Connection : MonoBehaviour {
     private Node m_end_node = null;
     private Vector3 m_end_point; // If the connection is incomplete
 
+    /*
     void OnDrawGizmos () {
         if (m_start_node) {
             Gizmos.DrawLine(m_start_node.transform.position, m_end_point);
         }
     }
+    */
 
     public void FinishConnectionWithEndNode (Node end_node) {
         m_end_node = end_node;

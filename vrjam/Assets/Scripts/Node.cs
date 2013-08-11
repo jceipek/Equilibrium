@@ -4,14 +4,31 @@ using System.Collections.Generic;
 
 public class Node : MonoBehaviour {
 
+    public Node[] m_nodes_for_which_to_make_connections;
+
     // Note: Will be made private
     public List<Connection> m_connections;
 
     private Highlighter m_visuals;
 
+    void Start () {
+        foreach (Node node in m_nodes_for_which_to_make_connections) {
+            GameObject connection_object = (GameObject)Instantiate(Resources.Load("Connection"));
+            Connection connection = connection_object.GetComponent<Connection>();
+            connection.InitializeWithStartNode(this);
+            connection.FinishConnectionWithEndNode(node);
+        }
+    }
+
     void Awake () {
         if (m_connections != null) m_connections = new List<Connection>();
         m_visuals = gameObject.GetComponentInChildren<Highlighter>();
+    }
+
+    void OnDrawGizmos () {
+        foreach (Node node in m_nodes_for_which_to_make_connections) {
+           Gizmos.DrawLine(node.transform.position, gameObject.transform.position);
+        }
     }
 
     public void AddConnection (Connection connection) {

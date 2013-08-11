@@ -41,15 +41,23 @@ public class InfectedNodeController : MonoBehaviour {
         return 0.0f;
     }
 
+    public void FullyInfect (Node node) {
+        if (m_infection_percentages != null) {
+            m_infection_percentages[node] = 1.0f;
+        }
+    }
+
     private void TEMP_UpdateVisuals () {
-        foreach (Node node in m_node.GetConnectedNodes()) {
+        /*foreach (Node node in m_node.GetConnectedNodes()) {
             Connection connection = m_node.ConnectionSharedWith(node);
             Color.Lerp(Color.red, Color.black, m_infection_percentages[node]);
-        }
+        }*/
         m_visuals.renderer.material.color = Color.black;
     }
 
     private void Infect (Node node) {
-        node.GetComponent<InfectedNodeController>().enabled = true;
+        InfectedNodeController other_infection = node.GetComponent<InfectedNodeController>();
+        other_infection.enabled = true;
+        other_infection.FullyInfect(m_node);
     }
 }

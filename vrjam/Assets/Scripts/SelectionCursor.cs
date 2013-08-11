@@ -7,7 +7,7 @@ public class SelectionCursor {
 
     public Texture m_image_crosshair     = null;
 
-    public OVRCameraController m_camera_controller = null;
+    public QCameraController m_camera_controller = null;
     public ContinuousInputController m_continuous_input_controller = null;
 
     public float   m_fade_time           = 0.3f;
@@ -49,8 +49,8 @@ public class SelectionCursor {
         m_image_crosshair = image;
     }
 
-    // SetOVRCameraController
-    public void SetOVRCameraController (ref OVRCameraController camera_controller) {
+    // SetQCameraController
+    public void SetQCameraController (ref QCameraController camera_controller) {
         m_camera_controller = camera_controller;
         m_camera_controller.GetCamera(ref m_main_camera);
 
@@ -105,7 +105,7 @@ public class SelectionCursor {
             GUI.color = new Color(1, 1, 1, m_fade_value * m_fade_scale);
 
             // Calculate X
-            XL += Input.GetAxis("Mouse X") * m_scale_speed_x;
+            //XL += Input.GetAxis("Mouse X") * m_scale_speed_x;
             if(XL < m_dead_zone_x) {
                 XL = m_dead_zone_x - 0.001f;
             } else if (XL > (Screen.width - m_dead_zone_x)) {
@@ -113,7 +113,7 @@ public class SelectionCursor {
             }
 
             // Calculate Y
-            YL -= Input.GetAxis("Mouse Y") * m_scale_speed_y;
+            //YL -= Input.GetAxis("Mouse Y") * m_scale_speed_y;
             if(YL < m_dead_zone_y) {
                 //CursorOnScreen = false;
                 if(YL < 0.0f) YL = 0.0f;

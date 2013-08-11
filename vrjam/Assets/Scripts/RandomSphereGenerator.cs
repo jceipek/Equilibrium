@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class RandomSphereGenerator : MonoBehaviour {
 
     public int m_node_count;
+    public int m_infected_count;
     public int m_connection_count;
 
     public float m_sphere_radius;
@@ -29,6 +30,7 @@ public class RandomSphereGenerator : MonoBehaviour {
     }
 
     private void GenerateNodes () {
+        int infected = 0;
         for (int index = 0; index < m_node_count; index++) {
             Vector3 random_vector;
             if (m_allow_nodes_inside_sphere) {
@@ -38,6 +40,11 @@ public class RandomSphereGenerator : MonoBehaviour {
             }
 
             Node node = GenerateNodeAt(random_vector);
+            if (infected < m_infected_count) {
+                InfectedNodeController infection = node.GetComponent<InfectedNodeController>();
+                infection.enabled = true;
+                infected++;
+            }
             m_node_list.Add(node);
         }
     }

@@ -4,7 +4,7 @@ using System.Collections;
 public class ThreeDimGUI : MonoBehaviour {
 
     // Handle to OVRCameraController
-    private OVRCameraController m_camera_controller = null;
+    private QCameraController m_camera_controller = null;
 
     // Handle to ContinuousInputController
     public ContinuousInputController m_continuous_input_controller; // TODO (Julian): Figure out how to handle this better
@@ -24,11 +24,11 @@ public class ThreeDimGUI : MonoBehaviour {
     private string strDeviceDetection       = "";
 
     // Mag yaw-drift correction
-    private OVRMagCalibration   m_mag_cal     = new OVRMagCalibration();
+    private QMagCalibration   m_mag_cal     = new QMagCalibration();
 
     // Replace the GUI with our own texture and 3D plane that
     // is attached to the rendder camera for true 3D placement
-    private OVRGUI          m_gui_helper         = new OVRGUI();
+    private QGUI          m_gui_helper         = new QGUI();
     private GameObject      m_gui_render_object  = null;
     private RenderTexture   m_gui_render_texture = null;
 
@@ -42,13 +42,13 @@ public class ThreeDimGUI : MonoBehaviour {
 
     void Awake() {
         // Find camera controller
-        OVRCameraController[] camera_controllers;
-        camera_controllers = gameObject.GetComponentsInChildren<OVRCameraController>();
+        QCameraController[] camera_controllers;
+        camera_controllers = gameObject.GetComponentsInChildren<QCameraController>();
 
         if (camera_controllers.Length == 0) {
-            Debug.LogWarning("ThreeDimGUI: No OVRCameraController attached.");
+            Debug.LogWarning("ThreeDimGUI: No QCameraController attached.");
         } else if (camera_controllers.Length > 1)
-            Debug.LogWarning("ThreeDimGUI: More then 1 OVRCameraController attached.");
+            Debug.LogWarning("ThreeDimGUI: More then 1 QCameraController attached.");
         else {
             m_camera_controller = camera_controllers[0];
         }
@@ -121,12 +121,12 @@ public class ThreeDimGUI : MonoBehaviour {
 
         // Mag Yaw-Drift correction
         UpdateFunctions += m_mag_cal.UpdateMagYawDriftCorrection;
-        m_mag_cal.SetOVRCameraController(ref m_camera_controller);
+        m_mag_cal.SetQCameraController(ref m_camera_controller);
 
         // Crosshair functionality
         m_crosshair.Init();
         m_crosshair.SetCrosshairTexture(ref m_crosshair_image);
-        m_crosshair.SetOVRCameraController (ref m_camera_controller);
+        m_crosshair.SetQCameraController (ref m_camera_controller);
         m_crosshair.SetContinuousInputController (ref m_continuous_input_controller);
         UpdateFunctions += m_crosshair.UpdateCrosshair;
 

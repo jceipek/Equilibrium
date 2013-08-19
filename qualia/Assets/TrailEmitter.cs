@@ -8,27 +8,28 @@ public class TrailEmitter : MonoBehaviour {
     public Color m_NormalColor;
     public Color m_InfectedColor;
 
-	private Node m_Node;
+	public Node m_Node;
 	private Infected m_Infection;
 
-	// Use this for initialization
-    void Start () {
+    void OnEnable ()
+    {
+    	m_Infection = m_Node.GetComponentInChildren<Infected>();
+    }
+
+    void Start ()
+    {
         StartCoroutine(EmissionTimer());
     }
 
-    public void InitializeWithNode (Node node)
-    {
-        m_Node = node;
-        m_Infection = node.GetComponentInChildren<Infected>();
-    }
-
-	IEnumerator EmissionTimer () {
+	IEnumerator EmissionTimer ()
+	{
         yield return new WaitForSeconds(m_RefreshFrequency);
         Emit();
         StartCoroutine(EmissionTimer());
     }
 
-	private void Emit () {
+	private void Emit ()
+	{
         foreach (Node targetNode in m_Node.GetConnectedNodes()) {
             Vector3 emissionLocation = gameObject.transform.position + Random.insideUnitSphere * 0.5f;
             Vector3 positionDifference = (targetNode.transform.position - m_Node.transform.position);

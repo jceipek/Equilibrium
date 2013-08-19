@@ -8,18 +8,10 @@ public class Node : MonoBehaviour
     public List<Node> m_NodesForWhichToMakeConnections;
 
     private Dictionary<Node, Connection> m_ConnectedNodesToConnections = new Dictionary<Node, Connection>();
-    private NodeVisualizer m_Visualizer;
-    private TrailEmitter m_Emitter;
     //public List<Node> m_DebugNodes;
 
     void OnEnable ()
     {
-        m_Visualizer = GetComponentInChildren<NodeVisualizer>();
-        m_Visualizer.InitializeWithNode(this);
-
-        m_Emitter = GetComponentInChildren<TrailEmitter>();
-        m_Emitter.InitializeWithNode(this);
-
         foreach (Node node in m_NodesForWhichToMakeConnections)
         {
             AddMutualConnectionTo(node);

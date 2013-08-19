@@ -4,18 +4,17 @@ using System.Collections.Generic;
 
 public class NodeVisualizer : MonoBehaviour
 {
-    private Node m_Node;
+    public Node m_Node;
     private Infected m_Infection;
+
+    void OnEnable ()
+    {
+        m_Infection = m_Node.GetComponentInChildren<Infected>();
+    }
 
     void Start ()
     {
         UpdateInfection();
-    }
-
-    public void InitializeWithNode (Node node)
-    {
-        m_Node = node;
-        m_Infection = m_Node.GetComponentInChildren<Infected>();
     }
 
     public void UpdateInfection ()

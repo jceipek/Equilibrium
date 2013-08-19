@@ -71,12 +71,11 @@ public class RandomSphericalLevelGenerator : MonoBehaviour
                 int second = Random.Range(0, m_NodeList.Count);
                 Node firstNode = m_NodeList[first];
                 Node secondNode = m_NodeList[second];
+
                 success = (first != second && !firstNode.DoesShareConnectionWith(secondNode));
                 if (success)
                 {
-                    GameObject connectionObject = (GameObject)Instantiate(Resources.Load("Connection"));
-                    Connection connection = connectionObject.GetComponent<Connection>();
-                    connection.InitializeConnectionBetween(firstNode, secondNode);
+                    firstNode.AddMutualConnectionTo(secondNode);
                 }
             } while (!success);
         }

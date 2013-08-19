@@ -59,8 +59,11 @@ public class AvatarController : MonoBehaviour
     void OnDrawGizmos ()
     {
         //if (!Application.isPlaying) {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(gameObject.transform.position, m_NextNode.transform.position);
+        if (m_NextNode)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(gameObject.transform.position, m_NextNode.transform.position);
+        }
         //}
     }
 

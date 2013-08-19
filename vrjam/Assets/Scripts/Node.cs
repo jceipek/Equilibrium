@@ -9,7 +9,15 @@ public class Node : MonoBehaviour {
     // Note: Will be made private
     public List<Connection> m_connections;
 
+    public AudioClip[] m_sound_loops;
+
+    private AudioSource m_audio;
+
     private Highlighter m_visuals;
+
+    void OnEnable () {
+        m_audio = GetComponent<AudioSource>();
+    }
 
     void Start () {
         foreach (Node node in m_nodes_for_which_to_make_connections) {
@@ -81,6 +89,11 @@ public class Node : MonoBehaviour {
 
     public void UnHighlight () {
         m_visuals.UnHighlight();
+    }
+
+    public void PlayRandomSound () {
+        m_audio.clip = m_sound_loops[Random.Range(0, m_sound_loops.Length)];
+        m_audio.Play();
     }
 
 }

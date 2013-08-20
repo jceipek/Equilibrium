@@ -14,6 +14,9 @@ public class Constants : MonoBehaviour
     public Color NODE_NORMAL_COLOR;
     public Color NODE_INFECTED_COLOR;
 
+    public Color TRAIL_NORMAL_TINT_COLOR;
+    public Color TRAIL_INFECTED_TINT_COLOR;
+
     void OnEnable ()
     {
         if (!g)

@@ -29,6 +29,13 @@ public class ConnectionVisualizer : MonoBehaviour
         m_lineRenderer.SetPosition(1, m_End.transform.position);
     }
 
+    // TODO (JULIAN): Consider eliminating this or making UpdateInfection() happen
+    // ONLY on infection changes
+    public void Update ()
+    {
+        UpdateInfection();
+    }
+
     public void UpdateInfection ()
     {
         Color startColor = Constants.g.CONNECTION_NORMAL_COLOR;

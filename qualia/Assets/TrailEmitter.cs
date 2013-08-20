@@ -5,8 +5,6 @@ public class TrailEmitter : MonoBehaviour {
 
     public float m_Velocity;
     public float m_RefreshFrequency;
-    public Color m_NormalColor;
-    public Color m_InfectedColor;
 
 	public Node m_Node;
 	private Infected m_Infection;
@@ -44,9 +42,9 @@ public class TrailEmitter : MonoBehaviour {
             }
             Vector3 velocity = positionDifference.normalized * m_Velocity;
             if (m_Infection.enabled) {
-                trailController.InitializeWith(m_InfectedColor, velocity, life);
+                trailController.InitializeWith(Constants.g.TRAIL_INFECTED_TINT_COLOR, velocity, life);
             } else {
-                trailController.InitializeWith(m_NormalColor, velocity, life);
+                trailController.InitializeWith(Constants.g.TRAIL_NORMAL_TINT_COLOR, velocity, life);
             }
         }
     }

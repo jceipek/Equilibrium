@@ -117,6 +117,8 @@ MonoBehaviour:
   CONNECTION_INFECTED_COLOR: {r: .352941185, g: 1, b: 0, a: .501960814}
   NODE_NORMAL_COLOR: {r: .191176474, g: .297160149, b: 1, a: .501960814}
   NODE_INFECTED_COLOR: {r: .316176474, g: .143914804, b: 0, a: .501960814}
+  TRAIL_NORMAL_TINT_COLOR: {r: .634180069, g: .0481725782, b: .727941155, a: .501960814}
+  TRAIL_INFECTED_TINT_COLOR: {r: .0236807875, g: .536764741, b: .0272192694, a: .501960814}
 --- !u!1 &181711810
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,8 +272,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Velocity: 40
   m_RefreshFrequency: .200000003
-  m_NormalColor: {r: .191176474, g: .297160149, b: 1, a: .501960814}
-  m_InfectedColor: {r: 0, g: .95588237, b: .0461461283, a: .501960814}
   m_Node: {fileID: 181711812}
 --- !u!1 &227929473
 GameObject:
@@ -1064,8 +1064,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Velocity: 40
   m_RefreshFrequency: .200000003
-  m_NormalColor: {r: .191176474, g: .297160149, b: 1, a: .501960814}
-  m_InfectedColor: {r: 0, g: .95588237, b: .0461461283, a: .501960814}
   m_Node: {fileID: 723472690}
 --- !u!1 &1322334675
 GameObject:
@@ -1683,8 +1681,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Velocity: 40
   m_RefreshFrequency: .200000003
-  m_NormalColor: {r: .191176474, g: .297160149, b: 1, a: .501960814}
-  m_InfectedColor: {r: 0, g: .95588237, b: .0461461283, a: .501960814}
   m_Node: {fileID: 760684432}
 --- !u!1 &1964770079
 GameObject:
@@ -1985,8 +1981,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Velocity: 40
   m_RefreshFrequency: .200000003
-  m_NormalColor: {r: .191176474, g: .297160149, b: 1, a: .501960814}
-  m_InfectedColor: {r: 0, g: .95588237, b: .0461461283, a: .501960814}
   m_Node: {fileID: 1517898132}
 --- !u!1001 &2077241164
 Prefab:

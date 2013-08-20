@@ -31,7 +31,8 @@ public class Infected : MonoBehaviour
                 m_ConnectedNodeToInfectionPercentage[node] = Mathf.Min(1.0f, m_ConnectedNodeToInfectionPercentage[node]);
                 Connection connection = m_Node.GetConnectionWith(node);
                 ConnectionVisualizer connectionVisuals = connection.GetComponentInChildren<ConnectionVisualizer>();
-                connectionVisuals.UpdateInfection();
+                // TODO (JULIAN): Consider uncommenting this
+                //connectionVisuals.UpdateInfection();
             }
         }
     }
@@ -50,6 +51,7 @@ public class Infected : MonoBehaviour
         Infected infected = node.GetComponent<Infected>();
         infected.enabled = true;
         NodeVisualizer nodeVisuals = node.GetComponentInChildren<NodeVisualizer>();
-        nodeVisuals.UpdateInfection();
+        // TODO (JULIAN): Consider uncommenting this
+        //nodeVisuals.UpdateInfection();
     }
 }

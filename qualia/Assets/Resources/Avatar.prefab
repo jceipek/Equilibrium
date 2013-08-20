@@ -110,7 +110,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &100012
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -121,8 +121,9 @@ GameObject:
   - 124: {fileID: 12400004}
   - 81: {fileID: 8100002}
   - 114: {fileID: 11400020}
+  - 114: {fileID: 11400026}
   m_Layer: 0
-  m_Name: StandardCameraController
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +140,21 @@ GameObject:
   - 108: {fileID: 10800002}
   m_Layer: 8
   m_Name: Illumination
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400016}
+  m_Layer: 0
+  m_Name: StandardCameraController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,7 +218,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400004}
-  - {fileID: 400012}
+  - {fileID: 400016}
   - {fileID: 400010}
   m_Father: {fileID: 0}
 --- !u!4 &400010
@@ -223,11 +239,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .699999988, z: 0}
+  m_LocalPosition: {x: 18.4035645, y: -16.3021965, z: 2.82641602}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400006}
-  m_Father: {fileID: 400008}
+  m_Father: {fileID: 400016}
 --- !u!4 &400014
 Transform:
   m_ObjectHideFlags: 1
@@ -239,6 +255,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
+--- !u!4 &400016
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.4035645, y: 17.0021973, z: -2.82641602}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400012}
+  m_Father: {fileID: 400008}
 --- !u!20 &2000000
 Camera:
   m_ObjectHideFlags: 1
@@ -554,7 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CameraMode: 0
   m_RiftCamera: {fileID: 100004}
-  m_StandardCamera: {fileID: 100012}
+  m_StandardCamera: {fileID: 100016}
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -684,6 +712,19 @@ MonoBehaviour:
   blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
   brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
     type: 3}
+--- !u!114 &11400026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 395275639006d4d788be8e975f33e0b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CrosshairTexture: {fileID: 2800000, guid: 7e14cb144c33540e29c8cd41cedc7884, type: 3}
+  m_standard_camera: {fileID: 0}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

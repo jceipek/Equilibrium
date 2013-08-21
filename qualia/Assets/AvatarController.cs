@@ -31,6 +31,7 @@ public class AvatarController : MonoBehaviour
                 Vector3 positionDifference = m_NextNode.transform.position - gameObject.transform.position;
                 if (positionDifference.magnitude < 0.1f)
                 {
+                    gameObject.SendMessage("ReachedNode", m_NextNode, SendMessageOptions.DontRequireReceiver);
                     m_IsMoving = false;
                 } else {
                     Vector3 direction = positionDifference.normalized;

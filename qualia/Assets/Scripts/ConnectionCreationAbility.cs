@@ -24,7 +24,14 @@ public class ConnectionCreationAbility : MonoBehaviour
         if (node)
         {
             //node.Highlight();
-            m_Avatar.m_NextNode.AddMutualConnectionTo(node);
+            if (m_Avatar.m_NextNode)
+            {
+                m_Avatar.m_NextNode.AddMutualConnectionTo(node);
+            }
+            else
+            {
+                Debug.LogError("m_NextNode undefined!");
+            }
         }
     }
 

@@ -8,9 +8,13 @@ public class Constants : MonoBehaviour
 
     public static Constants g;
 
+    public float COLLISION_DISTANCE = 0.1f;
+
     public float INFECTION_SPREAD_SPEED = 1.8f;
+
     public Color CONNECTION_NORMAL_COLOR;
     public Color CONNECTION_INFECTED_COLOR;
+
     public Color NODE_NORMAL_COLOR;
     public Color NODE_INFECTED_COLOR;
 

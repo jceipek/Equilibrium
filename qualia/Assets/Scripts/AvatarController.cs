@@ -29,7 +29,7 @@ public class AvatarController : MonoBehaviour
             if (m_IsMoving)
             {
                 Vector3 positionDifference = m_NextNode.transform.position - gameObject.transform.position;
-                if (positionDifference.magnitude < 0.1f)
+                if (Utils.IsDistanceInCollideRange(positionDifference.magnitude))
                 {
                     gameObject.SendMessage("ReachedNode", m_NextNode, SendMessageOptions.DontRequireReceiver);
                     m_IsMoving = false;

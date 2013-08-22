@@ -196,8 +196,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Velocity: 40
   m_RefreshFrequency: .200000003
-  m_NormalColor: {r: .191176474, g: .297160149, b: 1, a: .501960814}
-  m_InfectedColor: {r: 0, g: .95588237, b: .0461461283, a: .501960814}
   m_Node: {fileID: 11400000}
 --- !u!135 &13500000
 SphereCollider:

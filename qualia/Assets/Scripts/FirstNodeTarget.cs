@@ -5,9 +5,12 @@ public class FirstNodeTarget : MonoBehaviour {
 
     private AvatarController m_Avatar;
 
+/*
     void OnEnable ()
     {
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+
 
         if (playerObjects.Length != 1)
         {
@@ -20,6 +23,21 @@ public class FirstNodeTarget : MonoBehaviour {
             {
                 m_Avatar.m_NextNode = gameObject.GetComponent<Node>();
             }
+        }
+    }
+    */
+
+    void Start ()
+    {
+        CameraFade.StartAlphaFade(Color.white,
+                                  isFadeIn: true,
+                                  fadeDuration: 2f,
+                                  fadeDelay: 0f);
+
+        m_Avatar = AvatarController.g;
+        if (!m_Avatar.m_NextNode)
+        {
+            m_Avatar.m_NextNode = gameObject.GetComponent<Node>();
         }
     }
 

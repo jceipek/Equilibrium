@@ -6,15 +6,20 @@ public class DieOnHitNode : MonoBehaviour
 
     public string m_DeathSceneName;
 
+    private AvatarController m_Avatar;
+
+    void OnEnable ()
+    {
+        m_Avatar = gameObject.GetComponent<AvatarController>();
+    }
+
     void ReachedNode (Node node)
     {
         Infected infection = node.GetComponent<Infected>();
-        if (infection && infection.enabled)
+        if (infection && infection.enabled && m_Avatar.m_LevelTransitioning == false)
         {
-            Debug.Log(infection.enabled);
             Debug.Log("DIE!");
-            Destroy(gameObject);
-            Application.LoadLevel(m_DeathSceneName);
+            m_Avatar.TransitionToLevel(m_DeathSceneName);
         }
     }
 }

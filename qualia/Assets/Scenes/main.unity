@@ -1967,6 +1967,7 @@ MonoBehaviour:
   m_LookTarget: {fileID: 747168744}
   m_Speed: 7
   m_NextNode: {fileID: 0}
+  m_LevelTransitioning: 0
 --- !u!114 &2140810857
 MonoBehaviour:
   m_ObjectHideFlags: 0

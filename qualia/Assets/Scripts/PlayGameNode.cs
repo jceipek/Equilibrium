@@ -6,8 +6,11 @@ public class PlayGameNode : MonoBehaviour
 
     public string m_StartSceneName;
 
-    private GameObject m_Avatar;
+    private AvatarController m_Avatar;
 
+    private bool m_Started = false;
+
+    /*
     void OnEnable ()
     {
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
@@ -21,13 +24,21 @@ public class PlayGameNode : MonoBehaviour
             m_Avatar = playerObjects[0];
         }
     }
+    */
+
+    void Start ()
+    {
+        m_Avatar = AvatarController.g;
+    }
 
     void Update ()
     {
-        if (Utils.AreGameObjectsColliding(gameObject, m_Avatar))
+        if (Utils.AreGameObjectsColliding(gameObject, m_Avatar.gameObject) && !m_Started)
         {
             Debug.Log("START");
-            Application.LoadLevel(m_StartSceneName);
+            m_Started = true;
+            m_Avatar.TransitionToLevel(m_StartSceneName);
         }
     }
 }
+

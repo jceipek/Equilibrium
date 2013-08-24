@@ -8,6 +8,8 @@ public enum INPUT_MODE
 public class AvatarController : MonoBehaviour
 {
 
+    public static AvatarController g = null;
+
     public INPUT_MODE m_InputMode = INPUT_MODE.WaitToMove;
     public Transform m_LookTarget;
     public float m_Speed;
@@ -16,6 +18,21 @@ public class AvatarController : MonoBehaviour
     private bool m_IsMoving = false;
 
     private Node m_CurrentNode;
+
+    public bool m_LevelTransitioning = false;
+
+    void OnEnable ()
+    {
+        // Ensure uniqueness
+        if (AvatarController.g)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            AvatarController.g = this;
+        }
+    }
 
     void Start ()
     {
@@ -68,10 +85,28 @@ public class AvatarController : MonoBehaviour
         //}
     }
 
+    public void TransitionToLevel (string levelName)
+    {
+        m_LevelTransitioning = true;
+        m_NextNode = null;
+        m_CurrentNode = null;
+        CameraFade.StartAlphaFade(Color.white,
+                              isFadeIn: false,
+                              fadeDuration: 2f,
+                              fadeDelay: 0f,
+                              OnFadeFinish: () => {
+                                Application.LoadLevel(levelName);
+                                m_LevelTransitioning = false;
+                              });
+    }
+
     private IEnumerator MoveInSeconds (float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        PickNodeInSight();
+        if (!m_LevelTransitioning)
+        {
+            PickNodeInSight();
+        }
         m_IsMoving = true;
     }
 

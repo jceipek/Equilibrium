@@ -75,7 +75,7 @@ public class RandomSphericalLevelGenerator : MonoBehaviour
                 success = (first != second && !firstNode.DoesShareConnectionWith(secondNode));
                 if (success)
                 {
-                    firstNode.AddMutualConnectionTo(secondNode);
+                    firstNode.AddMutualConnectionTo(secondNode, audible: false);
                 }
             } while (!success);
         }

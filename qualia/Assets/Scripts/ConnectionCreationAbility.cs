@@ -35,17 +35,6 @@ public class ConnectionCreationAbility : MonoBehaviour
         }
     }
 
-    private void CreateConnection (Node startNode, Node endNode)
-    {
-        GameObject connection_object = (GameObject)Instantiate(Resources.Load("Connection"));
-        Connection connection = connection_object.GetComponent<Connection>();
-        connection.InitializeConnectionBetween(startNode, endNode);
-        //AudioSource.PlayClipAtPoint(m_new_connection_sound, end_node.transform.position);
-
-        //end_node.PlayRandomSound();
-    }
-
-
     void OnDrawGizmos ()
     {
         Gizmos.DrawRay(gameObject.transform.position, m_LookTarget.forward);

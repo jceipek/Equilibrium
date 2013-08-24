@@ -7,14 +7,18 @@ public class Node : MonoBehaviour
     // Not used during gameplay (For setup in editor)
     public List<Node> m_NodesForWhichToMakeConnections;
 
+    private NodeSFX m_SFX;
+
     private Dictionary<Node, Connection> m_ConnectedNodesToConnections = new Dictionary<Node, Connection>();
     //public List<Node> m_DebugNodes;
 
     void OnEnable ()
     {
+        m_SFX = GetComponentInChildren<NodeSFX>();
+
         foreach (Node node in m_NodesForWhichToMakeConnections)
         {
-            AddMutualConnectionTo(node);
+            AddMutualConnectionTo(node, audible: false);
         }
     }
 
@@ -34,7 +38,7 @@ public class Node : MonoBehaviour
         }
     }
 
-    public void AddMutualConnectionTo (Node node)
+    public void AddMutualConnectionTo (Node node, bool audible = true)
     {
         if (this == node)
         {
@@ -48,6 +52,10 @@ public class Node : MonoBehaviour
         }
         if (connection == null)
         {
+            if (audible)
+            {
+                m_SFX.PlayConnectionSound();
+            }
             connection = CreateConnectionBetween(this, node);
         }
 

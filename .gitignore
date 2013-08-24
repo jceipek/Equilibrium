@@ -12,8 +12,5 @@ qualia/[Oo]bj/
 *.sln
 *.pidb
 
-# Ignore audacity source files
-audio/
-
 # Ignore binaries
 builds/

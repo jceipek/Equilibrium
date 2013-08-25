@@ -12,6 +12,9 @@ public class NodeSFX : MonoBehaviour
     void OnEnable ()
     {
         m_AudioSource = GetComponent<AudioSource>();
+
+        WWW www = new WWW("file://"+System.IO.Path.Combine(Application.streamingAssetsPath, "new-connection.ogg"));
+        m_NewConnectionSound = www.GetAudioClip(true);
     }
 
     public void PlayConnectionSound ()

@@ -30,7 +30,7 @@ public class ConnectionCreationAbility : MonoBehaviour
             }
             else
             {
-                Debug.LogError("m_NextNode undefined!");
+                //Debug.LogError("m_NextNode undefined!");
             }
         }
     }

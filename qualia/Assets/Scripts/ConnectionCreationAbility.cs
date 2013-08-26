@@ -17,6 +17,11 @@ public class ConnectionCreationAbility : MonoBehaviour
         canCreateConnection = true;
     }
 
+    public void NotCloseEnoughToMakeConnection (Node node)
+    {
+        canCreateConnection = false;
+    }
+
     void OnEnable ()
     {
         SELECTABLE_LAYER = (1 << LayerMask.NameToLayer("Selectable"));

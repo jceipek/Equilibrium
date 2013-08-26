@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   COLLISION_DISTANCE: .100000001
+  MAKE_CONNECTION_DISTANCE: 3
   INFECTION_SPREAD_SPEED: 1.79999995
   CONNECTION_NORMAL_COLOR: {r: 1, g: 1, b: 1, a: .501960814}
   CONNECTION_INFECTED_COLOR: {r: .352941185, g: 1, b: 0, a: .501960814}
@@ -973,6 +974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LookTarget: {fileID: 109434962}
+  canCreateConnection: 0
 --- !u!114 &685913578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1005,6 +1007,7 @@ MonoBehaviour:
   m_Speed: 7
   m_NextNode: {fileID: 0}
   m_LevelTransitioning: 0
+  m_NodeThatWeReached: {fileID: 0}
 --- !u!1 &723472689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,7 +1047,7 @@ Transform:
   m_PrefabInternal: {fileID: 1869417439}
   m_GameObject: {fileID: 723472689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.5, y: 1, z: 6.75}
+  m_LocalPosition: {x: 6, y: 1, z: 21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 902889586}
@@ -1666,7 +1669,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 5cef0850f6eb04fc6af635b83ec8d315, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 12.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cef0850f6eb04fc6af635b83ec8d315, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1674,7 +1677,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cef0850f6eb04fc6af635b83ec8d315, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 6.75
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cef0850f6eb04fc6af635b83ec8d315, type: 2}
       propertyPath: m_LocalRotation.x

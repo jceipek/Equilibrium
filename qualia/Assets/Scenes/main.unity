@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   COLLISION_DISTANCE: .100000001
+  MAKE_CONNECTION_DISTANCE: 1
   INFECTION_SPREAD_SPEED: 1.79999995
   CONNECTION_NORMAL_COLOR: {r: 1, g: 1, b: 1, a: .501960814}
   CONNECTION_INFECTED_COLOR: {r: .352941185, g: 1, b: 0, a: .501960814}
@@ -2092,6 +2093,7 @@ MonoBehaviour:
   m_Speed: 7
   m_NextNode: {fileID: 0}
   m_LevelTransitioning: 0
+  m_NodeThatWeReached: {fileID: 0}
 --- !u!114 &2140810857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2120,6 +2122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LookTarget: {fileID: 747168744}
+  canCreateConnection: 0
 --- !u!114 &2140810859
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -50,11 +50,17 @@ public class AvatarController : MonoBehaviour
             if (m_IsMoving)
             {
                 Vector3 positionDifference = m_NextNode.transform.position - gameObject.transform.position;
-                if (Utils.IsDistanceInMakeConnectionRange(positionDifference.magnitude) &&
-                    m_NodeThatWeReached != m_NextNode)
+                if (Utils.IsDistanceInMakeConnectionRange(positionDifference.magnitude))
                 {
-                    gameObject.SendMessage("CloseEnoughToMakeConnection", m_NextNode, SendMessageOptions.DontRequireReceiver);
-                    m_NodeThatWeReached = m_NextNode;
+                    if (m_NodeThatWeReached != m_NextNode)
+                    {
+                        gameObject.SendMessage("CloseEnoughToMakeConnection", m_NextNode, SendMessageOptions.DontRequireReceiver);
+                        m_NodeThatWeReached = m_NextNode;
+                    }
+                }
+                else
+                {
+                    gameObject.SendMessage("NotCloseEnoughToMakeConnection", m_NextNode, SendMessageOptions.DontRequireReceiver);
                 }
                 if (Utils.IsDistanceInCollideRange(positionDifference.magnitude))
                 {

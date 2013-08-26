@@ -6,11 +6,13 @@ public class ConnectionCreationAbility : MonoBehaviour
     public Transform m_LookTarget;
     private static LayerMask SELECTABLE_LAYER;
     private AvatarController m_Avatar;
+    private SoundComplexityManager m_SoundComplexityManager;
 
     void OnEnable ()
     {
         SELECTABLE_LAYER = (1 << LayerMask.NameToLayer("Selectable"));
         m_Avatar = GetComponent<AvatarController>();
+        m_SoundComplexityManager = GetComponent<SoundComplexityManager>();
     }
 
     void Update ()
@@ -26,7 +28,11 @@ public class ConnectionCreationAbility : MonoBehaviour
             //node.Highlight();
             if (m_Avatar.m_NextNode)
             {
-                m_Avatar.m_NextNode.AddMutualConnectionTo(node);
+                bool createdConnection = m_Avatar.m_NextNode.AddMutualConnectionTo(node);
+                if (createdConnection)
+                {
+                    m_SoundComplexityManager.IncreaseComplexity();
+                }
             }
             else
             {

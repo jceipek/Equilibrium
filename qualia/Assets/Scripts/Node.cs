@@ -38,11 +38,12 @@ public class Node : MonoBehaviour
         }
     }
 
-    public void AddMutualConnectionTo (Node node, bool audible = true)
+    public bool AddMutualConnectionTo (Node node, bool audible = true)
     {
+        bool madeNewConnection = false;
         if (this == node)
         {
-            return;
+            return false;
         }
 
         Connection connection = GetConnectionWith(node);
@@ -56,6 +57,7 @@ public class Node : MonoBehaviour
             {
                 m_SFX.PlayConnectionSound();
             }
+            madeNewConnection = true;
             connection = CreateConnectionBetween(this, node);
         }
 
@@ -68,6 +70,8 @@ public class Node : MonoBehaviour
             m_DebugNodes.Add(nnode);
         }
         */
+
+        return madeNewConnection;
     }
 
     public Dictionary<Node, Connection>.KeyCollection GetConnectedNodes ()

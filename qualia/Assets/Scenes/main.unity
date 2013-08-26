@@ -491,7 +491,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400016, guid: 029af4a6e9acb4897857880b19986531, type: 2}
       propertyPath: m_CameraMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 029af4a6e9acb4897857880b19986531, type: 2}
       propertyPath: m_LocalPosition.x
@@ -847,6 +847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NewConnectionSound: {fileID: 8300000, guid: 8a34439ae35404b63b2460c4f109421b,
     type: 3}
+  m_InfectionSound: {fileID: 8300000, guid: 9831689f8f760454ab8f7e3d31b27408, type: 3}
 --- !u!82 &902889592
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1601,6 +1602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NewConnectionSound: {fileID: 8300000, guid: 8a34439ae35404b63b2460c4f109421b,
     type: 3}
+  m_InfectionSound: {fileID: 8300000, guid: 9831689f8f760454ab8f7e3d31b27408, type: 3}
 --- !u!82 &1912197925
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1976,6 +1978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NewConnectionSound: {fileID: 8300000, guid: 8a34439ae35404b63b2460c4f109421b,
     type: 3}
+  m_InfectionSound: {fileID: 8300000, guid: 9831689f8f760454ab8f7e3d31b27408, type: 3}
 --- !u!82 &2035786503
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2206,7 +2209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804df2b239f13407a890fcea75a876cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CameraMode: 0
+  m_CameraMode: 1
   m_RiftCamera: {fileID: 1612105585}
   m_StandardCamera: {fileID: 1415616953}
 --- !u!114 &2140810858

@@ -270,6 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NewConnectionSound: {fileID: 8300000, guid: 8a34439ae35404b63b2460c4f109421b,
     type: 3}
+  m_InfectionSound: {fileID: 8300000, guid: 9831689f8f760454ab8f7e3d31b27408, type: 3}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

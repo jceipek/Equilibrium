@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class NodeSFX : MonoBehaviour
 {
     public AudioClip m_NewConnectionSound;
+    public AudioClip m_InfectionSound;
 
     private AudioSource m_AudioSource;
 
@@ -19,7 +20,13 @@ public class NodeSFX : MonoBehaviour
 
     public void PlayConnectionSound ()
     {
-        m_AudioSource.clip = m_NewConnectionSound;
+        AudioSource.PlayClipAtPoint(m_NewConnectionSound, gameObject.transform.position);
+    }
+
+    public void PlayLoopedInfectionSound ()
+    {
+        m_AudioSource.loop = true;
+        m_AudioSource.clip = m_InfectionSound;
         m_AudioSource.Play();
     }
 

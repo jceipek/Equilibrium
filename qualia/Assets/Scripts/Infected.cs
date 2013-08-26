@@ -14,6 +14,11 @@ public class Infected : MonoBehaviour
         m_ConnectedNodeToInfectionPercentage = new Dictionary<Node, float>();
     }
 
+    void Start () {
+        NodeSFX sfx = m_Node.GetComponentInChildren<NodeSFX>();
+        sfx.PlayLoopedInfectionSound();
+    }
+
     void Update ()
     {
         foreach (Node node in m_Node.GetConnectedNodes()) {

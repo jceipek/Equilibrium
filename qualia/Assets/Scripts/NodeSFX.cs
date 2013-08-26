@@ -20,7 +20,7 @@ public class NodeSFX : MonoBehaviour
 
     public void PlayConnectionSound ()
     {
-        AudioSource.PlayClipAtPoint(m_NewConnectionSound, gameObject.transform.position);
+        AudioSource.PlayClipAtPoint(m_NewConnectionSound, gameObject.transform.position, 0.5f);
     }
 
     public void PlayLoopedInfectionSound ()

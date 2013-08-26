@@ -151,8 +151,11 @@ public class SelectionCursor
         direction *= m_CrosshairDistance;
         Vector3 endPosition = startPosition + direction;
 
-        m_Target.transform.position = endPosition;
-        m_Target.transform.localRotation = m_MainCamera.transform.rotation;
+        if (m_Target)
+        {
+            m_Target.transform.position = endPosition;
+            m_Target.transform.localRotation = m_MainCamera.transform.rotation;
+        }
 
         RaycastHit hit;
         if (Physics.Linecast(startPosition, endPosition, out hit))

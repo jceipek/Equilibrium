@@ -38,6 +38,8 @@ public class FirstNodeTarget : MonoBehaviour {
         if (!m_Avatar.m_NextNode)
         {
             m_Avatar.m_NextNode = gameObject.GetComponent<Node>();
+            // Sketchy!
+            m_Avatar.transform.position = gameObject.transform.position;
         }
     }
 

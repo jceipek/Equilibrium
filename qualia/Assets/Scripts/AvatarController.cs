@@ -18,11 +18,13 @@ public class AvatarController : MonoBehaviour
     private bool m_IsMoving = false;
 
     private Node m_CurrentNode;
+    private CameraSwitcher m_CameraSwitcher;
 
     public bool m_LevelTransitioning = false;
 
     void OnEnable ()
     {
+        m_CameraSwitcher = GetComponent<CameraSwitcher>();
         // Ensure uniqueness
         if (AvatarController.g)
         {
@@ -95,6 +97,7 @@ public class AvatarController : MonoBehaviour
                               fadeDuration: 2f,
                               fadeDelay: 0f,
                               OnFadeFinish: () => {
+                                m_CameraSwitcher.DisconnectRiftCamera();
                                 Application.LoadLevel(levelName);
                                 m_LevelTransitioning = false;
                               });

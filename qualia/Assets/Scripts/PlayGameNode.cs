@@ -35,7 +35,7 @@ public class PlayGameNode : MonoBehaviour
     {
         if (Utils.AreGameObjectsColliding(gameObject, m_Avatar.gameObject) && !m_Started)
         {
-            Debug.Log("START");
+            //Debug.Log("START");
             m_Started = true;
             m_Avatar.TransitionToLevel(m_StartSceneName);
         }

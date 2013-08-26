@@ -8,15 +8,7 @@ public class KeepAliveOnSceneSwitch : MonoBehaviour
         DontDestroyOnLoad(transform.gameObject);
         foreach (Transform child in transform)
         {
-        	// Hack to make scene transitions work
-        	if (child.gameObject.tag != "RiftCameraController")
-        	{
-        		DontDestroyOnLoad(child.gameObject);
-        	}
-        	else
-        	{
-        		Debug.Log("Kill ME");
-        	}
+    		DontDestroyOnLoad(child.gameObject);
         }
     }
 }

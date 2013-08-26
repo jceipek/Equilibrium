@@ -97,7 +97,6 @@ public class AvatarController : MonoBehaviour
                               fadeDuration: 2f,
                               fadeDelay: 0f,
                               OnFadeFinish: () => {
-                                m_CameraSwitcher.DisconnectRiftCamera();
                                 Application.LoadLevel(levelName);
                                 m_LevelTransitioning = false;
                               });

@@ -23,7 +23,7 @@ public class DieOnHitNode : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(m_DeathSound, gameObject.transform.position, 1.0f);
             m_AudioSource.PlayOneShot(m_DeathSound, 10.0f);
-            Debug.Log("DIE!");
+            //Debug.Log("DIE!");
             m_Avatar.TransitionToLevel(m_DeathSceneName);
         }
     }

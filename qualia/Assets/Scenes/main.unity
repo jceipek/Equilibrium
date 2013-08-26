@@ -491,7 +491,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400016, guid: 029af4a6e9acb4897857880b19986531, type: 2}
       propertyPath: m_CameraMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: 029af4a6e9acb4897857880b19986531, type: 2}
       propertyPath: m_LocalPosition.x
@@ -2206,7 +2206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804df2b239f13407a890fcea75a876cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CameraMode: 1
+  m_CameraMode: 0
   m_RiftCamera: {fileID: 1612105585}
   m_StandardCamera: {fileID: 1415616953}
 --- !u!114 &2140810858

@@ -1,3 +1,5 @@
+"use strict";
+
 require.config({
   paths: {
     zepto: 'zepto.min',

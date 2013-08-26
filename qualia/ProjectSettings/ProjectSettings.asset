@@ -10,12 +10,12 @@ PlayerSettings:
   targetGlesGraphics: 1
   targetResolution: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: qualia
+  companyName: Julian Ceipek
+  productName: Qualia
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   defaultScreenWidth: 1280
-  defaultScreenHeight: 720
+  defaultScreenHeight: 800
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_RenderingPath: 1
@@ -24,7 +24,7 @@ PlayerSettings:
   m_UseDX11: 0
   iosShowActivityIndicatorOnLoading: -1
   androidShowActivityIndicatorOnLoading: -1
-  displayResolutionDialog: 0
+  displayResolutionDialog: 1
   allowedAutorotateToPortrait: 1
   allowedAutorotateToPortraitUpsideDown: 1
   allowedAutorotateToLandscapeRight: 1
@@ -41,7 +41,7 @@ PlayerSettings:
   enableHWStatistics: 1
   usePlayerLog: 1
   stripPhysics: 0
-  forceSingleInstance: 0
+  forceSingleInstance: 1
   resizableWindow: 0
   useMacAppStoreValidation: 0
   gpuSkinning: 1
@@ -49,7 +49,7 @@ PlayerSettings:
   xboxEnableKinect: 0
   xboxEnableKinectAutoTracking: 0
   xboxEnableFitness: 0
-  macFullscreenMode: 2
+  macFullscreenMode: 1
   xboxSpeechDB: 0
   xboxEnableHeadOrientation: 0
   wiiHio2Usage: -1
@@ -64,7 +64,7 @@ PlayerSettings:
     width: 0
     height: 0
   m_SupportedAspectRatios:
-    4:3: 1
+    4:3: 0
     5:4: 0
     16:10: 0
     16:9: 0
@@ -106,9 +106,28 @@ PlayerSettings:
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
-    - m_Icon: {fileID: 0}
+    - m_Icon: {fileID: 2800000, guid: 1346a88d7c6a74e35a428bdba26b10d5, type: 3}
       m_Size: 128
-  m_BuildTargetBatching: []
+  - m_BuildTarget: Standalone
+    m_Icons:
+    - m_Icon: {fileID: 2800000, guid: 1346a88d7c6a74e35a428bdba26b10d5, type: 3}
+      m_Size: 1024
+    - m_Icon: {fileID: 2800000, guid: 590f417bbfc634bada0b52195fd1cc46, type: 3}
+      m_Size: 512
+    - m_Icon: {fileID: 2800000, guid: a515865b401d8482ab8a732726a6f739, type: 3}
+      m_Size: 256
+    - m_Icon: {fileID: 2800000, guid: 7a3383f4fcaf8436391b67a691c3cfff, type: 3}
+      m_Size: 128
+    - m_Icon: {fileID: 2800000, guid: abb874b32a74a4fb6a3881de085d3c30, type: 3}
+      m_Size: 48
+    - m_Icon: {fileID: 2800000, guid: a39e7708977814abd89c2db169fc1ebd, type: 3}
+      m_Size: 32
+    - m_Icon: {fileID: 2800000, guid: fa3e5416bbcbc4d82933c9109abde13d, type: 3}
+      m_Size: 16
+  m_BuildTargetBatching:
+  - m_BuildTarget: Standalone
+    m_StaticBatching: 1
+    m_DynamicBatching: 1
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
   wiiRegion: 1

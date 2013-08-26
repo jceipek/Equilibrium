@@ -22,6 +22,8 @@ public class AvatarController : MonoBehaviour
 
     public bool m_LevelTransitioning = false;
 
+    public Node m_NodeThatWeReached = null;
+
     void OnEnable ()
     {
         m_CameraSwitcher = GetComponent<CameraSwitcher>();
@@ -48,6 +50,12 @@ public class AvatarController : MonoBehaviour
             if (m_IsMoving)
             {
                 Vector3 positionDifference = m_NextNode.transform.position - gameObject.transform.position;
+                if (Utils.IsDistanceInMakeConnectionRange(positionDifference.magnitude) &&
+                    m_NodeThatWeReached != m_NextNode)
+                {
+                    gameObject.SendMessage("CloseEnoughToMakeConnection", m_NextNode, SendMessageOptions.DontRequireReceiver);
+                    m_NodeThatWeReached = m_NextNode;
+                }
                 if (Utils.IsDistanceInCollideRange(positionDifference.magnitude))
                 {
                     gameObject.SendMessage("ReachedNode", m_NextNode, SendMessageOptions.DontRequireReceiver);

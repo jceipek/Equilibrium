@@ -9,6 +9,7 @@ public class Constants : MonoBehaviour
     public static Constants g;
 
     public float COLLISION_DISTANCE = 0.1f;
+    public float MAKE_CONNECTION_DISTANCE = 3f;
 
     public float INFECTION_SPREAD_SPEED = 1.8f;
 

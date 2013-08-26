@@ -15,4 +15,9 @@ public class Utils
     {
         return distance < Constants.g.COLLISION_DISTANCE;
     }
+
+    public static bool IsDistanceInMakeConnectionRange (float distance)
+    {
+        return distance < Constants.g.MAKE_CONNECTION_DISTANCE;
+    }
 }

@@ -99,4 +99,9 @@ public class Node : MonoBehaviour
         }
         return null;
     }
+
+    public int GetConnectionCount ()
+    {
+        return m_ConnectedNodesToConnections.Count;
+    }
 }

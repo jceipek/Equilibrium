@@ -268,8 +268,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22fefeb8b9c074f3dbed7e55aed270bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NewConnectionSound: {fileID: 8300000, guid: 8a34439ae35404b63b2460c4f109421b,
-    type: 3}
+  m_NewConnectionSound:
+  - {fileID: 8300000, guid: 8a34439ae35404b63b2460c4f109421b, type: 3}
+  - {fileID: 8300000, guid: 0229483573e7245c0a723d1788a823fd, type: 3}
+  m_NewInfectedConnectionSound:
+  - {fileID: 8300000, guid: 3b3244a88c7cc4c70a8c5e20495a0363, type: 3}
+  - {fileID: 8300000, guid: 745bb79d8689f4bf68b7ea36c64439b3, type: 3}
   m_InfectionSound: {fileID: 8300000, guid: 9831689f8f760454ab8f7e3d31b27408, type: 3}
 --- !u!135 &13500000
 SphereCollider:

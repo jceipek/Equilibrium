@@ -55,7 +55,7 @@ public class Node : MonoBehaviour
         {
             if (audible)
             {
-                m_SFX.PlayConnectionSound();
+                m_SFX.PlayConnectionSound(this, node);
             }
             madeNewConnection = true;
             connection = CreateConnectionBetween(this, node);
